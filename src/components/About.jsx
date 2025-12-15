@@ -1,122 +1,104 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Terminal, Code, Cpu, Globe } from 'lucide-react';
-
-const TerminalLine = ({ text, delay = 0 }) => {
-    const [displayedText, setDisplayedText] = useState('');
-
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            let i = 0;
-            const interval = setInterval(() => {
-                setDisplayedText(text.substring(0, i + 1));
-                i++;
-                if (i > text.length) clearInterval(interval);
-            }, 30);
-            return () => clearInterval(interval);
-        }, delay);
-        return () => clearTimeout(timeout);
-    }, [text, delay]);
-
-    return (
-        <div className="font-mono text-sm md:text-base text-gray-300 mb-2">
-            <span className="text-secondary">➜</span> <span className="text-primary">~</span> {displayedText}
-        </div>
-    );
-};
+import { Award, BookOpen, Code, User } from 'lucide-react';
+import HackerText from './HackerText';
 
 const About = () => {
     return (
-        <section id="about" className="py-20 bg-background relative overflow-hidden">
-            <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+        <section className="py-20 relative overflow-hidden">
+            <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
 
-                {/* Text Content */}
+                {/* Profile Photo Hologram */}
                 <motion.div
                     initial={{ opacity: 0, x: -50 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8 }}
                     viewport={{ once: true }}
+                    className="relative group"
                 >
-                    <div className="flex items-center gap-2 mb-6">
-                        <Terminal className="w-6 h-6 text-primary" />
-                        <h2 className="text-3xl font-bold tracking-tight">System Status</h2>
-                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary opacity-20 blur-2xl group-hover:opacity-40 transition-opacity duration-500" />
+                    <div className="relative w-full aspect-square max-w-md mx-auto rounded-2xl overflow-hidden border border-white/10 bg-black/50 backdrop-blur-sm">
+                        {/* Placeholder for Profile Photo */}
+                        <div className="absolute inset-0 flex items-center justify-center bg-white/5">
+                            <User className="w-24 h-24 text-white/20" />
+                        </div>
+                        <img
+                            src="/Port.jpg"
+                            alt="Vishal Soni"
+                            className="w-full h-full object-cover opacity-80 mix-blend-luminosity hover:mix-blend-normal transition-all duration-500"
+                        />
 
-                    <p className="text-gray-400 mb-6 leading-relaxed">
-                        I'm a Cloud & DevOps Engineer with a passion for automation and reliability.
-                        My mission is to build systems that are self-healing, scalable, and secure by default.
-                    </p>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {[
-                            { icon: <Code className="w-5 h-5" />, title: "Infrastructure as Code", desc: "Terraform, Ansible" },
-                            { icon: <Cpu className="w-5 h-5" />, title: "Containerization", desc: "Docker, Kubernetes" },
-                            { icon: <Globe className="w-5 h-5" />, title: "Cloud Native", desc: "AWS, GCP, Azure" },
-                            { icon: <Terminal className="w-5 h-5" />, title: "CI/CD Pipelines", desc: "Jenkins, GitHub Actions" },
-                        ].map((item, index) => (
-                            <div key={index} className="p-4 bg-surface border border-white/5 rounded-lg hover:border-primary/30 transition-colors">
-                                <div className="text-primary mb-2">{item.icon}</div>
-                                <h3 className="font-bold text-white mb-1">{item.title}</h3>
-                                <p className="text-sm text-gray-500">{item.desc}</p>
-                            </div>
-                        ))}
+                        {/* Holographic Overlay */}
+                        <div className="absolute inset-0 bg-scanline opacity-20 pointer-events-none" />
+                        <div className="absolute top-0 left-0 w-full h-1 bg-primary/50 shadow-[0_0_10px_#00f0ff]" />
+                        <div className="absolute bottom-0 right-0 w-full h-1 bg-secondary/50 shadow-[0_0_10px_#7000ff]" />
                     </div>
                 </motion.div>
 
-                {/* Terminal Visual */}
+                {/* Content */}
                 <motion.div
                     initial={{ opacity: 0, x: 50 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8 }}
                     viewport={{ once: true }}
-                    className="relative"
+                    className="space-y-8"
                 >
-                    <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-lg blur opacity-20" />
-                    <div className="relative bg-[#0d1117] rounded-lg border border-white/10 overflow-hidden shadow-2xl">
-                        <div className="flex items-center px-4 py-2 bg-white/5 border-b border-white/5">
-                            <div className="flex gap-2">
-                                <div className="w-3 h-3 rounded-full bg-red-500" />
-                                <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                                <div className="w-3 h-3 rounded-full bg-green-500" />
-                            </div>
-                            <div className="ml-4 text-xs text-gray-500 font-mono">vishal@cloud-station:~/profile</div>
+                    <div>
+                        <div className="flex items-center gap-2 text-primary font-mono text-xs mb-4">
+                            <User className="w-4 h-4" />
+                            <span>IDENTITY_VERIFIED</span>
                         </div>
+                        <h2 className="text-4xl font-bold font-display mb-6">
+                            <HackerText text="ABOUT_ME" />
+                        </h2>
+                        <p className="text-gray-400 text-lg leading-relaxed">
+                            Cloud & DevOps Engineer with a passion for building scalable, serverless architectures.
+                            Proven track record in full-stack development, computer vision, and cloud infrastructure.
+                        </p>
+                    </div>
 
-                        <div className="p-6 h-[400px] overflow-y-auto font-mono text-sm">
-                            <TerminalLine text="whoami" delay={500} />
-                            <TerminalLine text="Cloud & DevOps Engineer based in India." delay={1500} />
-                            <br />
-                            <TerminalLine text="cat mindset.txt" delay={3000} />
-                            <TerminalLine text="Automation first. If you have to do it twice, script it." delay={4000} />
-                            <br />
-                            <TerminalLine text="./show-skills.sh --verbose" delay={6000} />
-                            <div className="mt-2 text-gray-400">
-                                <motion.div
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ delay: 7.5, duration: 0.5 }}
-                                >
-                                    &gt; Loading cloud modules... <span className="text-green-500">Done</span><br />
-                                    &gt; Initializing Kubernetes clusters... <span className="text-green-500">Done</span><br />
-                                    &gt; Configuring CI/CD pipelines... <span className="text-green-500">Done</span><br />
-                                    &gt; System ready for deployment.
-                                </motion.div>
+                    {/* Education */}
+                    <div className="space-y-4">
+                        <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                            <BookOpen className="w-5 h-5 text-secondary" /> EDUCATION
+                        </h3>
+                        <div className="space-y-4">
+                            <div className="bg-white/5 p-4 rounded border border-white/10 hover:border-primary/50 transition-colors">
+                                <div className="flex justify-between items-start mb-2">
+                                    <span className="font-bold text-white">VIT Bhopal University</span>
+                                    <span className="text-xs font-mono text-gray-500">2023 - 2027 (Expected)</span>
+                                </div>
+                                <div className="text-sm text-gray-400">B.Tech CSE (Cloud Computing & Automation)</div>
+                                <div className="text-xs text-gray-500 mt-1">Bhopal, Madhya Pradesh</div>
                             </div>
 
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ delay: 9, duration: 0.5 }}
-                                className="mt-4"
-                            >
-                                <span className="text-secondary">➜</span> <span className="text-primary">~</span> <span className="animate-pulse">_</span>
-                            </motion.div>
+                            <div className="bg-white/5 p-4 rounded border border-white/10 hover:border-white/30 transition-colors">
+                                <div className="flex justify-between items-start mb-2">
+                                    <span className="font-bold text-white">Tagore Public School</span>
+                                    <span className="text-xs font-mono text-gray-500">2008 - 2023</span>
+                                </div>
+                                <div className="text-sm text-gray-400">Class XII: 90% | Class X: 85%</div>
+                                <div className="text-xs text-gray-500 mt-1">Surajgarh, Rajasthan</div>
+                            </div>
                         </div>
                     </div>
-                </motion.div>
 
-            </div >
-        </section >
+                    {/* Achievements */}
+                    <div className="space-y-4">
+                        <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                            <Award className="w-5 h-5 text-primary" /> ACHIEVEMENTS
+                        </h3>
+                        <div className="grid gap-3">
+                            <div className="flex items-center gap-3 bg-white/5 p-3 rounded border border-white/10 hover:border-primary/50 transition-colors">
+                                <div className="w-2 h-2 rounded-full bg-primary shadow-[0_0_5px_#00f0ff]" />
+                                <span className="text-sm text-gray-300">
+                                    <strong className="text-white">AIR 207</strong> in CodeVita Season 13 (Round 1) & <strong className="text-white">Rank 3</strong> at VIT Bhopal University
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </motion.div>
+            </div>
+        </section>
     );
 };
 

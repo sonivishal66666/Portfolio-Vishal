@@ -7,23 +7,26 @@ import Projects from './components/Projects';
 import Experience from './components/Experience';
 import Contact from './components/Contact';
 
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
+import PageTransition from './components/PageTransition';
+import SmoothScroll from './components/SmoothScroll';
 
 function App() {
+  const location = useLocation();
+
   return (
     <DashboardLayout>
-      <Routes>
-        <Route path="/" element={
-          <>
-            <Hero />
-            <About />
-          </>
-        } />
-        <Route path="/projects" element={<Projects />} />
-        <Route path="/skills" element={<Skills />} />
-        <Route path="/experience" element={<Experience />} />
-        <Route path="/contact" element={<Contact />} />
-      </Routes>
+      <SmoothScroll />
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<PageTransition><Hero /><About /></PageTransition>} />
+          <Route path="/projects" element={<PageTransition><Projects /></PageTransition>} />
+          <Route path="/skills" element={<PageTransition><Skills /></PageTransition>} />
+          <Route path="/experience" element={<PageTransition><Experience /></PageTransition>} />
+          <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
+        </Routes>
+      </AnimatePresence>
     </DashboardLayout>
   );
 }

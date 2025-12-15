@@ -1,120 +1,105 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Cpu, Cloud, Shield, Database, Terminal, Globe, Code, Layers } from 'lucide-react';
+import { Cpu, Code, Globe, Database, Terminal, Award, CheckCircle } from 'lucide-react';
+import HackerText from './HackerText';
 
-const SkillCategory = ({ category, index, isActive, onActivate }) => {
-    return (
-        <motion.button
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ delay: index * 0.1 }}
-            onClick={onActivate}
-            className={`w-full text-left p-4 rounded-lg border transition-all duration-300 relative overflow-hidden group ${isActive
-                    ? 'bg-primary/10 border-primary text-primary'
-                    : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10 hover:text-white'
-                }`}
-        >
-            {isActive && (
+const SkillCategory = ({ title, icon, isActive, onClick }) => (
+    <button
+        onClick={onClick}
+        className={`w-full text-left p-4 rounded-lg border transition-all duration-300 flex items-center gap-4 group ${isActive
+                ? 'bg-primary/10 border-primary text-white shadow-[0_0_20px_rgba(0,240,255,0.2)]'
+                : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10 hover:border-white/30'
+            }`}
+    >
+        <div className={`p-2 rounded ${isActive ? 'bg-primary text-black' : 'bg-black border border-white/20'}`}>
+            {icon}
+        </div>
+        <span className="font-mono font-bold tracking-wider">{title}</span>
+        {isActive && <div className="ml-auto w-2 h-2 rounded-full bg-primary animate-pulse" />}
+    </button>
+);
+
+const SkillNode = ({ skill, index }) => (
+    <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: index * 0.05 }}
+        className="relative group"
+    >
+        <div className="absolute inset-0 bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="relative bg-black/50 border border-white/10 p-4 rounded hover:border-primary/50 transition-colors">
+            <div className="flex justify-between items-center mb-2">
+                <span className="font-bold text-white">{skill.name}</span>
+                <span className="text-[10px] font-mono text-primary">{skill.level}</span>
+            </div>
+            <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
                 <motion.div
-                    layoutId="activeSkill"
-                    className="absolute inset-0 bg-primary/5"
-                    initial={false}
-                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                    initial={{ width: 0 }}
+                    whileInView={{ width: `${skill.progress}%` }}
+                    transition={{ duration: 1, delay: 0.2 }}
+                    className="h-full bg-primary shadow-[0_0_10px_#00f0ff]"
                 />
-            )}
-
-            <div className="flex items-center gap-4 relative z-10">
-                <div className={`p-2 rounded ${isActive ? 'bg-primary text-black' : 'bg-black border border-white/20'}`}>
-                    {category.icon}
-                </div>
-                <div>
-                    <div className="font-bold font-display tracking-wide">{category.title}</div>
-                    <div className="text-[10px] font-mono opacity-60">{category.skills.length} MODULES</div>
-                </div>
-                {isActive && (
-                    <div className="ml-auto w-2 h-2 rounded-full bg-primary animate-pulse" />
-                )}
             </div>
-        </motion.button>
-    );
-};
-
-const SkillNode = ({ skill, index }) => {
-    return (
-        <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: index * 0.05 }}
-            whileHover={{ scale: 1.05 }}
-            className="bg-black/50 border border-white/10 p-4 rounded-lg hover:border-primary/50 transition-colors group cursor-default"
-        >
-            <div className="flex justify-between items-start mb-2">
-                <span className="text-primary font-mono text-xs">v{skill.version}</span>
-                <div className="flex gap-1">
-                    {[...Array(skill.level)].map((_, i) => (
-                        <div key={i} className="w-1 h-3 bg-primary/50 rounded-full" />
-                    ))}
-                </div>
-            </div>
-            <div className="font-bold text-white mb-1 group-hover:text-primary transition-colors">{skill.name}</div>
-            <div className="text-xs text-gray-500 font-mono">{skill.desc}</div>
-        </motion.div>
-    );
-};
+        </div>
+    </motion.div>
+);
 
 const Skills = () => {
-    const [activeCategory, setActiveCategory] = useState(0);
+    const [activeCategory, setActiveCategory] = useState('languages');
 
-    const categories = [
-        {
-            id: 'cloud',
-            title: 'CLOUD INFRASTRUCTURE',
-            icon: <Cloud className="w-5 h-5" />,
-            skills: [
-                { name: 'AWS', version: '2.0', level: 5, desc: 'EKS, Lambda, VPC, IAM' },
-                { name: 'Terraform', version: '1.6', level: 5, desc: 'IaC, State Management' },
-                { name: 'Kubernetes', version: '1.28', level: 4, desc: 'Helm, Operators, CNI' },
-                { name: 'Azure', version: 'AZ-104', level: 3, desc: 'AKS, Entra ID, VNet' }
-            ]
-        },
-        {
-            id: 'devops',
-            title: 'CI/CD & AUTOMATION',
-            icon: <Layers className="w-5 h-5" />,
-            skills: [
-                { name: 'GitHub Actions', version: 'v4', level: 5, desc: 'Custom Runners, Secrets' },
-                { name: 'ArgoCD', version: '2.8', level: 4, desc: 'GitOps, App of Apps' },
-                { name: 'Jenkins', version: 'LTS', level: 4, desc: 'Groovy Pipelines' },
-                { name: 'Ansible', version: '2.14', level: 3, desc: 'Playbooks, Roles' }
-            ]
-        },
-        {
-            id: 'security',
-            title: 'DevSecOps',
-            icon: <Shield className="w-5 h-5" />,
-            skills: [
-                { name: 'Vault', version: '1.15', level: 4, desc: 'Secrets Engine, PKI' },
-                { name: 'Trivy', version: '0.45', level: 5, desc: 'Container Scanning' },
-                { name: 'SonarQube', version: '10.2', level: 4, desc: 'Code Quality Gates' },
-                { name: 'Istio', version: '1.19', level: 3, desc: 'mTLS, Traffic Mgmt' }
-            ]
-        },
-        {
-            id: 'code',
-            title: 'PROGRAMMING',
+    const categories = {
+        languages: {
             icon: <Code className="w-5 h-5" />,
             skills: [
-                { name: 'Python', version: '3.11', level: 5, desc: 'Boto3, Flask, Automation' },
-                { name: 'Go', version: '1.21', level: 3, desc: 'CLI Tools, k8s Controllers' },
-                { name: 'Bash', version: '5.2', level: 5, desc: 'Shell Scripting' },
-                { name: 'JavaScript', version: 'ES6+', level: 4, desc: 'React, Node.js' }
+                { name: "Python", level: "ADVANCED", progress: 90 },
+                { name: "Java", level: "INTERMEDIATE", progress: 75 },
+                { name: "C++", level: "INTERMEDIATE", progress: 70 },
+                { name: "PHP", level: "INTERMEDIATE", progress: 70 },
+                { name: "JavaScript", level: "ADVANCED", progress: 85 },
+                { name: "SQL", level: "ADVANCED", progress: 85 }
+            ]
+        },
+        cloud: {
+            icon: <Globe className="w-5 h-5" />,
+            skills: [
+                { name: "AWS Lambda", level: "ADVANCED", progress: 90 },
+                { name: "Amazon RDS", level: "INTERMEDIATE", progress: 75 },
+                { name: "Amazon S3", level: "ADVANCED", progress: 85 },
+                { name: "Google Cloud Run", level: "INTERMEDIATE", progress: 70 },
+                { name: "Firebase", level: "INTERMEDIATE", progress: 75 }
+            ]
+        },
+        devops: {
+            icon: <Terminal className="w-5 h-5" />,
+            skills: [
+                { name: "Docker", level: "ADVANCED", progress: 85 },
+                { name: "Kubernetes", level: "INTERMEDIATE", progress: 75 },
+                { name: "Jenkins", level: "INTERMEDIATE", progress: 70 },
+                { name: "Terraform", level: "INTERMEDIATE", progress: 70 },
+                { name: "GitHub Actions", level: "ADVANCED", progress: 85 }
+            ]
+        },
+        frameworks: {
+            icon: <Database className="w-5 h-5" />,
+            skills: [
+                { name: "React", level: "ADVANCED", progress: 90 },
+                { name: "ArgoCD", level: "INTERMEDIATE", progress: 70 },
+                { name: "JUnit", level: "INTERMEDIATE", progress: 65 }
             ]
         }
+    };
+
+    const certifications = [
+        "Frontend Developer (React) - HackerRank",
+        "SQL (Advanced) - HackerRank",
+        "Applied Machine Learning in Python - Coursera",
+        "Introduction to Internet of Things - NPTEL",
+        "Advanced Kubernetes/AKS Network & Infrastructure - Udemy"
     ];
 
     return (
-        <section className="py-20 relative min-h-screen flex items-center">
-            <div className="max-w-6xl mx-auto px-6 w-full">
+        <section className="py-20 min-h-screen flex flex-col justify-center relative overflow-hidden">
+            <div className="max-w-6xl mx-auto px-6 w-full relative z-10">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -122,65 +107,62 @@ const Skills = () => {
                     className="mb-16"
                 >
                     <div className="flex items-center gap-2 text-primary font-mono text-xs mb-4">
-                        <Terminal className="w-4 h-4" />
-                        <span>SKILL_MATRIX.JSON</span>
+                        <Cpu className="w-4 h-4" />
+                        <span>NEURAL_LINK_ESTABLISHED</span>
                     </div>
-                    <h2 className="text-4xl font-bold font-display mb-4">TECHNICAL ARSENAL</h2>
-                    <p className="text-gray-400 max-w-xl">
-                        Comprehensive toolchain for building, deploying, and securing cloud-native applications.
-                    </p>
+                    <h2 className="text-4xl md:text-5xl font-bold font-display mb-6">
+                        <HackerText text="SKILL_MATRIX" />
+                    </h2>
                 </motion.div>
 
-                <div className="grid lg:grid-cols-12 gap-8">
-                    {/* Left: Category Selection */}
-                    <div className="lg:col-span-4 space-y-4">
-                        {categories.map((cat, idx) => (
+                <div className="grid lg:grid-cols-3 gap-12">
+                    {/* Categories */}
+                    <div className="space-y-4">
+                        {Object.entries(categories).map(([key, data]) => (
                             <SkillCategory
-                                key={cat.id}
-                                category={cat}
-                                index={idx}
-                                isActive={activeCategory === idx}
-                                onActivate={() => setActiveCategory(idx)}
+                                key={key}
+                                title={key.toUpperCase()}
+                                icon={data.icon}
+                                isActive={activeCategory === key}
+                                onClick={() => setActiveCategory(key)}
                             />
                         ))}
+
+                        {/* Certifications Block */}
+                        <div className="mt-8 p-6 rounded-lg bg-white/5 border border-white/10">
+                            <h3 className="text-white font-bold mb-4 flex items-center gap-2">
+                                <Award className="w-4 h-4 text-secondary" /> CERTIFICATIONS
+                            </h3>
+                            <ul className="space-y-3">
+                                {certifications.map((cert, i) => (
+                                    <li key={i} className="flex items-start gap-2 text-xs text-gray-400">
+                                        <CheckCircle className="w-3 h-3 text-primary mt-0.5 shrink-0" />
+                                        {cert}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
 
-                    {/* Right: Skill Visualization */}
-                    <div className="lg:col-span-8 bg-surface/30 border border-white/10 rounded-xl p-8 relative overflow-hidden min-h-[500px]">
-                        {/* Background Grid */}
-                        <div className="absolute inset-0 bg-grid opacity-10 pointer-events-none" />
-                        <div className="absolute top-0 right-0 p-4">
-                            <Cpu className="w-24 h-24 text-white/5" />
-                        </div>
+                    {/* Skills Grid */}
+                    <div className="lg:col-span-2">
+                        <div className="bg-black/50 border border-white/10 rounded-xl p-8 min-h-[400px] relative overflow-hidden">
+                            <div className="absolute inset-0 bg-grid opacity-10 pointer-events-none" />
 
-                        <div className="relative z-10">
-                            <div className="flex justify-between items-center mb-8 border-b border-white/10 pb-4">
-                                <h3 className="text-xl font-bold text-white flex items-center gap-3">
-                                    {categories[activeCategory].icon}
-                                    {categories[activeCategory].title}
-                                </h3>
-                                <div className="text-xs font-mono text-primary animate-pulse">
-                                    LOADING MODULES...
-                                </div>
-                            </div>
-
-                            <div className="grid md:grid-cols-2 gap-4">
-                                <AnimatePresence mode="wait">
-                                    {categories[activeCategory].skills.map((skill, idx) => (
-                                        <SkillNode key={`${categories[activeCategory].id}-${skill.name}`} skill={skill} index={idx} />
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={activeCategory}
+                                    initial={{ opacity: 0, x: 20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    exit={{ opacity: 0, x: -20 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="grid sm:grid-cols-2 gap-4 relative z-10"
+                                >
+                                    {categories[activeCategory].skills.map((skill, index) => (
+                                        <SkillNode key={skill.name} skill={skill} index={index} />
                                     ))}
-                                </AnimatePresence>
-                            </div>
-                        </div>
-
-                        {/* Decorative Code Snippet */}
-                        <div className="absolute bottom-4 right-4 text-[10px] font-mono text-gray-600 text-right hidden md:block">
-                            <div>class {categories[activeCategory].id.charAt(0).toUpperCase() + categories[activeCategory].id.slice(1)} implements Skill {'{'}</div>
-                            <div>  constructor() {'{'}</div>
-                            <div>    this.mastery = 'EXPERT';</div>
-                            <div>    this.deployed = true;</div>
-                            <div>  {'}'}</div>
-                            <div>{'}'}</div>
+                                </motion.div>
+                            </AnimatePresence>
                         </div>
                     </div>
                 </div>

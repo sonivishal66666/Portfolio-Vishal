@@ -90,15 +90,23 @@ const Hero = () => {
                         </div>
                     </div>
 
-                    <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-none font-display">
-                        AUTOMATING <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-secondary glitch-text" data-text="THE FUTURE">
-                            THE FUTURE
-                        </span>
-                    </h1>
+                    <div className="relative mb-8">
+                        <h1 className="text-7xl md:text-9xl font-bold tracking-tighter leading-none font-display relative z-10">
+                            <span className="text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">VISHAL</span> <br />
+                            <span className="text-primary drop-shadow-[0_0_20px_rgba(0,240,255,0.8)] group-hover:text-white transition-colors duration-300">
+                                SONI
+                            </span>
+                        </h1>
+                        {/* Glow Effect */}
+                        <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-secondary/20 blur-3xl -z-10 opacity-50 animate-pulse-slow" />
+
+                        {/* Decorative Elements */}
+                        <div className="absolute top-0 right-0 w-20 h-20 border-t-2 border-r-2 border-primary/50 rounded-tr-3xl opacity-50" />
+                        <div className="absolute bottom-0 left-0 w-20 h-20 border-b-2 border-l-2 border-secondary/50 rounded-bl-3xl opacity-50" />
+                    </div>
 
                     <p className="text-xl text-gray-400 mb-8 leading-relaxed max-w-lg border-l-2 border-primary/30 pl-6">
-                        Architecting self-healing cloud infrastructure and high-velocity DevOps pipelines.
+                        Cloud & DevOps Engineer architecting self-healing infrastructure and high-velocity pipelines.
                     </p>
 
                     <div className="flex flex-wrap gap-4">

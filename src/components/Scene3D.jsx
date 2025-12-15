@@ -73,7 +73,7 @@ const DataStream = () => {
 
 const Scene3D = () => {
     return (
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 pointer-events-none">
             <Canvas camera={{ position: [0, 0, 2] }} dpr={[1, 2]} performance={{ min: 0.5 }}>
                 <fog attach="fog" args={['#050505', 1.8, 3]} />
                 <ParticleField count={2000} />

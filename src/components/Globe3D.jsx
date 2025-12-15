@@ -28,8 +28,8 @@ const GlobePoints = (props) => {
 
 const Globe3D = () => {
     return (
-        <div className="absolute inset-0 z-0 opacity-50">
-            <Canvas camera={{ position: [0, 0, 2.5] }}>
+        <div className="absolute inset-0 z-0 opacity-50 pointer-events-none">
+            <Canvas camera={{ position: [0, 0, 2.5] }} dpr={[1, 2]}>
                 <GlobePoints />
             </Canvas>
         </div>

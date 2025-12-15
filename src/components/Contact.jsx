@@ -48,12 +48,16 @@ const Contact = () => {
 
                     <div className="grid grid-cols-2 gap-4 font-mono text-sm">
                         <div className="p-4 rounded bg-white/5 border border-white/10">
-                            <div className="text-xs text-gray-500 mb-1">LATENCY</div>
-                            <div className="text-primary">12ms</div>
+                            <div className="text-xs text-gray-500 mb-1">EMAIL</div>
+                            <div className="text-primary truncate" title="vishalsoni6350@gmail.com">vishalsoni6350@gmail.com</div>
                         </div>
                         <div className="p-4 rounded bg-white/5 border border-white/10">
-                            <div className="text-xs text-gray-500 mb-1">ENCRYPTION</div>
-                            <div className="text-primary">AES-256</div>
+                            <div className="text-xs text-gray-500 mb-1">PHONE</div>
+                            <div className="text-primary">+91 6375188332</div>
+                        </div>
+                        <div className="col-span-2 p-4 rounded bg-white/5 border border-white/10">
+                            <div className="text-xs text-gray-500 mb-1">LINKEDIN</div>
+                            <div className="text-primary">linkedin.com/in/vishalsoni18</div>
                         </div>
                     </div>
                 </motion.div>
@@ -122,8 +126,8 @@ const Contact = () => {
                                 type="submit"
                                 disabled={formState !== 'idle'}
                                 className={`w-full py-4 font-bold text-sm tracking-widest flex items-center justify-center gap-2 transition-all duration-300 relative overflow-hidden group ${formState === 'sent'
-                                        ? 'bg-success text-black'
-                                        : 'bg-primary text-black'
+                                    ? 'bg-success text-black'
+                                    : 'bg-primary text-black'
                                     }`}
                             >
                                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
