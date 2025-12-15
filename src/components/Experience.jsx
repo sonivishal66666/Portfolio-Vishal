@@ -17,7 +17,56 @@ const Experience = () => {
     ];
 
     return (
-        <section className="py-20 min-h-screen flex flex-col justify-center relative overflow-hidden">
+        <section className="py-20 min-h-screen flex flex-col justify-center relative overflow-hidden bg-black perspective-1000">
+            {/* Infinity Corridor Background */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                {/* 3D Grid Tunnel */}
+                <div
+                    className="absolute inset-[-100%] opacity-20"
+                    style={{
+                        backgroundImage: `
+                            linear-gradient(transparent 0%, #00f0ff 2px, transparent 3px),
+                            linear-gradient(90deg, transparent 0%, #00f0ff 2px, transparent 3px)
+                        `,
+                        backgroundSize: '100px 100px',
+                        transform: 'perspective(500px) rotateX(60deg)',
+                        transformOrigin: 'center top',
+                        animation: 'grid-move 20s linear infinite'
+                    }}
+                />
+
+                {/* Speed Lines (Stars) */}
+                {[...Array(20)].map((_, i) => (
+                    <motion.div
+                        key={i}
+                        initial={{ opacity: 0, x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight, scale: 0 }}
+                        animate={{
+                            opacity: [0, 1, 0],
+                            scale: [0, 3],
+                            z: [0, 100] // Simulated Z-depth via scale
+                        }}
+                        transition={{
+                            duration: Math.random() * 2 + 1,
+                            repeat: Infinity,
+                            ease: "linear",
+                            delay: Math.random() * 2
+                        }}
+                        className="absolute w-1 h-1 bg-white rounded-full shadow-[0_0_10px_white]"
+                    />
+                ))}
+
+                {/* Central Fog / Void */}
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,black_100%)]" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black" />
+            </div>
+
+            <style>{`
+                @keyframes grid-move {
+                    0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+                    100% { transform: perspective(500px) rotateX(60deg) translateY(100px); }
+                }
+            `}</style>
+
             <div className="max-w-4xl mx-auto px-6 w-full relative z-10">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}

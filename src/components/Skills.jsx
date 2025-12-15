@@ -7,15 +7,16 @@ const SkillModule = ({ skill, index }) => (
     <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
+        whileHover={{ scale: 1.05, y: -5 }}
         transition={{ delay: index * 0.05 }}
         className="group relative"
     >
         {/* Module Container */}
-        <div className="relative h-full bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-4 overflow-hidden hover:border-primary/50 transition-all duration-300 hover:bg-white/5">
+        <div className="relative h-full bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-4 overflow-hidden group-hover:border-primary/50 transition-all duration-300 hover:bg-white/5 shadow-lg group-hover:shadow-primary/20">
 
             {/* Decorative "Circuit" Lines */}
             <div className="absolute top-0 right-0 w-16 h-16 opacity-20 pointer-events-none">
-                <div className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full" />
+                <div className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full group-hover:animate-ping" />
                 <div className="absolute top-2 right-6 w-8 h-[1px] bg-primary" />
                 <div className="absolute top-6 right-2 w-[1px] h-8 bg-primary" />
             </div>
@@ -24,7 +25,7 @@ const SkillModule = ({ skill, index }) => (
             <div className="flex flex-col h-full justify-between relative z-10">
                 <div className="flex justify-between items-start mb-4">
                     <div className="p-2 rounded-lg bg-white/5 border border-white/10 group-hover:border-primary/30 transition-colors">
-                        <Layers className="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors" />
+                        <Layers className="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors group-hover:rotate-12" />
                     </div>
                     <div className="text-[10px] font-mono text-gray-600 group-hover:text-primary/50 transition-colors">
                         MOD-{index.toString().padStart(3, '0')}
@@ -39,11 +40,11 @@ const SkillModule = ({ skill, index }) => (
                             {[...Array(5)].map((_, i) => (
                                 <div
                                     key={i}
-                                    className={`w-1 h-3 rounded-full ${i < skill.level ? 'bg-primary' : 'bg-white/10'} transition-colors duration-300`}
+                                    className={`w-1 h-3 rounded-full ${i < skill.level ? 'bg-primary' : 'bg-white/10'} transition-colors duration-300 group-hover:shadow-[0_0_5px_#00f0ff]`}
                                 />
                             ))}
                         </div>
-                        <span className="text-[10px] font-mono text-gray-500 ml-2">
+                        <span className="text-[10px] font-mono text-gray-500 ml-2 group-hover:text-white transition-colors">
                             {skill.level >= 5 ? 'MAX_CAPACITY' : 'OPTIMIZED'}
                         </span>
                     </div>
@@ -60,21 +61,22 @@ const CertCard = ({ cert, index }) => (
     <motion.div
         initial={{ opacity: 0, x: 20 }}
         whileInView={{ opacity: 1, x: 0 }}
+        whileHover={{ scale: 1.02, x: 5 }}
         transition={{ delay: index * 0.1 }}
-        className="relative group"
+        className="relative group cursor-pointer"
     >
-        <div className="relative bg-black/60 border border-white/10 rounded-lg p-4 hover:border-secondary/50 transition-all duration-300 flex items-center gap-4 overflow-hidden">
+        <div className="relative bg-black/60 border border-white/10 rounded-lg p-4 group-hover:border-secondary/50 transition-all duration-300 flex items-center gap-4 overflow-hidden shadow-md group-hover:shadow-secondary/20">
             {/* Holographic Sheen */}
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none" />
 
-            <div className="p-3 bg-secondary/10 rounded-lg border border-secondary/20 text-secondary">
+            <div className="p-3 bg-secondary/10 rounded-lg border border-secondary/20 text-secondary group-hover:scale-110 transition-transform">
                 <Award className="w-5 h-5" />
             </div>
 
             <div className="flex-1 min-w-0">
                 <h4 className="text-white font-bold text-sm truncate group-hover:text-secondary transition-colors">{cert.title}</h4>
                 <div className="flex items-center gap-2 mt-1">
-                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/5 text-gray-400 border border-white/5">
+                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/5 text-gray-400 border border-white/5 group-hover:border-white/20 transition-colors">
                         {cert.issuer}
                     </span>
                     <span className="text-[10px] font-mono text-green-500 flex items-center gap-1">
@@ -88,6 +90,12 @@ const CertCard = ({ cert, index }) => (
 
 const Skills = () => {
     const [activeCategory, setActiveCategory] = useState('languages');
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+    const handleMouseMove = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    };
 
     // Level: 1-5 (Visual bars only)
     const categories = {
@@ -145,7 +153,47 @@ const Skills = () => {
     ];
 
     return (
-        <section className="py-24 relative overflow-hidden min-h-screen flex flex-col justify-center">
+        <section
+            onMouseMove={handleMouseMove}
+            className="py-24 relative overflow-hidden min-h-screen flex flex-col justify-center bg-black"
+        >
+            {/* Hex-Hive Background */}
+            <div className="absolute inset-0 pointer-events-none">
+                {/* Base Hex Grid */}
+                <div
+                    className="absolute inset-0 opacity-[0.03]"
+                    style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l25.98 15v30L30 60 4.02 45V15z' fill-opacity='0' stroke='%23ffffff' stroke-width='1'/%3E%3C/svg%3E")`,
+                        backgroundSize: '60px 60px'
+                    }}
+                />
+
+                {/* Interactive Glow (Flashlight) */}
+                <div
+                    className="absolute inset-0 transition-opacity duration-300"
+                    style={{
+                        background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(0, 240, 255, 0.1), transparent 40%)`
+                    }}
+                />
+
+                {/* Random Pulsing Hexagons (Simulated) */}
+                <motion.div
+                    animate={{ opacity: [0, 0.5, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, repeatDelay: 2 }}
+                    className="absolute top-1/4 left-1/4 w-16 h-16 bg-primary/20 clip-path-hexagon blur-xl"
+                />
+                <motion.div
+                    animate={{ opacity: [0, 0.3, 0] }}
+                    transition={{ duration: 5, repeat: Infinity, repeatDelay: 3 }}
+                    className="absolute bottom-1/3 right-1/4 w-24 h-24 bg-secondary/20 clip-path-hexagon blur-xl"
+                />
+                <motion.div
+                    animate={{ opacity: [0, 0.4, 0] }}
+                    transition={{ duration: 3, repeat: Infinity, repeatDelay: 5 }}
+                    className="absolute top-1/2 right-1/3 w-12 h-12 bg-white/10 clip-path-hexagon blur-lg"
+                />
+            </div>
+
             <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
 
                 {/* Header */}

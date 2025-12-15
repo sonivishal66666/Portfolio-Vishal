@@ -262,8 +262,42 @@ const Projects = () => {
 
     return (
         <section className="py-20 relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
-            {/* Background Elements */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent opacity-50" />
+            {/* Holographic Blueprint Background */}
+            <div className="absolute inset-0 pointer-events-none bg-black">
+                {/* Technical Grid */}
+                <div
+                    className="absolute inset-0 opacity-20"
+                    style={{
+                        backgroundImage: `linear-gradient(to right, #00f0ff 1px, transparent 1px), linear-gradient(to bottom, #00f0ff 1px, transparent 1px)`,
+                        backgroundSize: '40px 40px',
+                        maskImage: 'radial-gradient(circle at center, black 40%, transparent 100%)'
+                    }}
+                />
+
+                {/* Scanning Laser Line */}
+                <motion.div
+                    animate={{ top: ['0%', '100%'], opacity: [0, 1, 0] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                    className="absolute left-0 w-full h-[2px] bg-primary shadow-[0_0_20px_#00f0ff]"
+                />
+
+                {/* Rotating Wireframe Cube (Simulated) */}
+                <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    className="absolute top-20 right-20 w-64 h-64 border border-primary/20 rounded-full opacity-20"
+                    style={{ borderStyle: 'dashed' }}
+                />
+                <motion.div
+                    animate={{ rotate: -360 }}
+                    transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                    className="absolute bottom-20 left-20 w-48 h-48 border border-secondary/20 rounded-full opacity-20"
+                    style={{ borderStyle: 'dotted' }}
+                />
+
+                {/* Digital Noise / Grain */}
+                <div className="absolute inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+            </div>
 
             <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
                 {/* Header */}
