@@ -110,7 +110,7 @@ const Hero = () => {
                     </p>
 
                     <div className="flex flex-wrap gap-4">
-                        <button className="cyber-button px-8 py-4 bg-primary text-black font-bold text-sm tracking-widest hover:bg-white transition-colors clip-path-polygon">
+                        <button className="cyber-button px-8 py-4 bg-[#00f0ff] text-black font-bold text-sm tracking-widest hover:bg-white transition-colors">
                             INITIATE PROJECT
                         </button>
                         <button className="px-8 py-4 border border-white/10 hover:bg-white/5 text-white font-mono text-sm tracking-widest transition-colors">

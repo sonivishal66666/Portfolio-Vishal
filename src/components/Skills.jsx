@@ -1,44 +1,86 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Cpu, Code, Globe, Database, Terminal, Award, CheckCircle } from 'lucide-react';
+import { Cpu, Code, Globe, Database, Terminal, Award, CheckCircle, Shield, Zap, Layers } from 'lucide-react';
 import HackerText from './HackerText';
 
-const SkillCategory = ({ title, icon, isActive, onClick }) => (
-    <button
-        onClick={onClick}
-        className={`w-full text-left p-4 rounded-lg border transition-all duration-300 flex items-center gap-4 group ${isActive
-                ? 'bg-primary/10 border-primary text-white shadow-[0_0_20px_rgba(0,240,255,0.2)]'
-                : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10 hover:border-white/30'
-            }`}
+const SkillModule = ({ skill, index }) => (
+    <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: index * 0.05 }}
+        className="group relative"
     >
-        <div className={`p-2 rounded ${isActive ? 'bg-primary text-black' : 'bg-black border border-white/20'}`}>
-            {icon}
+        {/* Module Container */}
+        <div className="relative h-full bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-4 overflow-hidden hover:border-primary/50 transition-all duration-300 hover:bg-white/5">
+
+            {/* Decorative "Circuit" Lines */}
+            <div className="absolute top-0 right-0 w-16 h-16 opacity-20 pointer-events-none">
+                <div className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full" />
+                <div className="absolute top-2 right-6 w-8 h-[1px] bg-primary" />
+                <div className="absolute top-6 right-2 w-[1px] h-8 bg-primary" />
+            </div>
+
+            {/* Content */}
+            <div className="flex flex-col h-full justify-between relative z-10">
+                <div className="flex justify-between items-start mb-4">
+                    <div className="p-2 rounded-lg bg-white/5 border border-white/10 group-hover:border-primary/30 transition-colors">
+                        <Layers className="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors" />
+                    </div>
+                    <div className="text-[10px] font-mono text-gray-600 group-hover:text-primary/50 transition-colors">
+                        MOD-{index.toString().padStart(3, '0')}
+                    </div>
+                </div>
+
+                <div>
+                    <h3 className="text-lg font-bold text-white mb-1 group-hover:text-primary transition-colors">{skill.name}</h3>
+                    <div className="flex items-center gap-2">
+                        {/* Signal Strength Indicator (Visual only, no numbers) */}
+                        <div className="flex gap-1">
+                            {[...Array(5)].map((_, i) => (
+                                <div
+                                    key={i}
+                                    className={`w-1 h-3 rounded-full ${i < skill.level ? 'bg-primary' : 'bg-white/10'} transition-colors duration-300`}
+                                />
+                            ))}
+                        </div>
+                        <span className="text-[10px] font-mono text-gray-500 ml-2">
+                            {skill.level >= 5 ? 'MAX_CAPACITY' : 'OPTIMIZED'}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            {/* Hover Glow */}
+            <div className="absolute -inset-2 bg-primary/20 blur-2xl opacity-0 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none" />
         </div>
-        <span className="font-mono font-bold tracking-wider">{title}</span>
-        {isActive && <div className="ml-auto w-2 h-2 rounded-full bg-primary animate-pulse" />}
-    </button>
+    </motion.div>
 );
 
-const SkillNode = ({ skill, index }) => (
+const CertCard = ({ cert, index }) => (
     <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: index * 0.05 }}
+        initial={{ opacity: 0, x: 20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ delay: index * 0.1 }}
         className="relative group"
     >
-        <div className="absolute inset-0 bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        <div className="relative bg-black/50 border border-white/10 p-4 rounded hover:border-primary/50 transition-colors">
-            <div className="flex justify-between items-center mb-2">
-                <span className="font-bold text-white">{skill.name}</span>
-                <span className="text-[10px] font-mono text-primary">{skill.level}</span>
+        <div className="relative bg-black/60 border border-white/10 rounded-lg p-4 hover:border-secondary/50 transition-all duration-300 flex items-center gap-4 overflow-hidden">
+            {/* Holographic Sheen */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none" />
+
+            <div className="p-3 bg-secondary/10 rounded-lg border border-secondary/20 text-secondary">
+                <Award className="w-5 h-5" />
             </div>
-            <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
-                <motion.div
-                    initial={{ width: 0 }}
-                    whileInView={{ width: `${skill.progress}%` }}
-                    transition={{ duration: 1, delay: 0.2 }}
-                    className="h-full bg-primary shadow-[0_0_10px_#00f0ff]"
-                />
+
+            <div className="flex-1 min-w-0">
+                <h4 className="text-white font-bold text-sm truncate group-hover:text-secondary transition-colors">{cert.title}</h4>
+                <div className="flex items-center gap-2 mt-1">
+                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/5 text-gray-400 border border-white/5">
+                        {cert.issuer}
+                    </span>
+                    <span className="text-[10px] font-mono text-green-500 flex items-center gap-1">
+                        <CheckCircle className="w-3 h-3" /> VERIFIED
+                    </span>
+                </div>
             </div>
         </div>
     </motion.div>
@@ -47,122 +89,122 @@ const SkillNode = ({ skill, index }) => (
 const Skills = () => {
     const [activeCategory, setActiveCategory] = useState('languages');
 
+    // Level: 1-5 (Visual bars only)
     const categories = {
         languages: {
-            icon: <Code className="w-5 h-5" />,
+            icon: <Code className="w-4 h-4" />,
+            label: "LANGUAGES",
             skills: [
-                { name: "Python", level: "ADVANCED", progress: 90 },
-                { name: "Java", level: "INTERMEDIATE", progress: 75 },
-                { name: "C++", level: "INTERMEDIATE", progress: 70 },
-                { name: "PHP", level: "INTERMEDIATE", progress: 70 },
-                { name: "JavaScript", level: "ADVANCED", progress: 85 },
-                { name: "SQL", level: "ADVANCED", progress: 85 }
+                { name: "Python", level: 5 },
+                { name: "Java", level: 4 },
+                { name: "C++", level: 4 },
+                { name: "PHP", level: 3 },
+                { name: "JavaScript", level: 5 },
+                { name: "SQL", level: 5 }
             ]
         },
         cloud: {
-            icon: <Globe className="w-5 h-5" />,
+            icon: <Globe className="w-4 h-4" />,
+            label: "CLOUD_INFRA",
             skills: [
-                { name: "AWS Lambda", level: "ADVANCED", progress: 90 },
-                { name: "Amazon RDS", level: "INTERMEDIATE", progress: 75 },
-                { name: "Amazon S3", level: "ADVANCED", progress: 85 },
-                { name: "Google Cloud Run", level: "INTERMEDIATE", progress: 70 },
-                { name: "Firebase", level: "INTERMEDIATE", progress: 75 }
+                { name: "AWS Lambda", level: 5 },
+                { name: "Amazon RDS", level: 4 },
+                { name: "Amazon S3", level: 5 },
+                { name: "Cloud Run", level: 3 },
+                { name: "Firebase", level: 4 }
             ]
         },
         devops: {
-            icon: <Terminal className="w-5 h-5" />,
+            icon: <Terminal className="w-4 h-4" />,
+            label: "DEVOPS",
             skills: [
-                { name: "Docker", level: "ADVANCED", progress: 85 },
-                { name: "Kubernetes", level: "INTERMEDIATE", progress: 75 },
-                { name: "Jenkins", level: "INTERMEDIATE", progress: 70 },
-                { name: "Terraform", level: "INTERMEDIATE", progress: 70 },
-                { name: "GitHub Actions", level: "ADVANCED", progress: 85 }
+                { name: "Docker", level: 5 },
+                { name: "Kubernetes", level: 4 },
+                { name: "Jenkins", level: 4 },
+                { name: "Terraform", level: 4 },
+                { name: "GitHub Actions", level: 5 }
             ]
         },
         frameworks: {
-            icon: <Database className="w-5 h-5" />,
+            icon: <Database className="w-4 h-4" />,
+            label: "FRAMEWORKS",
             skills: [
-                { name: "React", level: "ADVANCED", progress: 90 },
-                { name: "ArgoCD", level: "INTERMEDIATE", progress: 70 },
-                { name: "JUnit", level: "INTERMEDIATE", progress: 65 }
+                { name: "React", level: 5 },
+                { name: "ArgoCD", level: 4 },
+                { name: "JUnit", level: 3 }
             ]
         }
     };
 
     const certifications = [
-        "Frontend Developer (React) - HackerRank",
-        "SQL (Advanced) - HackerRank",
-        "Applied Machine Learning in Python - Coursera",
-        "Introduction to Internet of Things - NPTEL",
-        "Advanced Kubernetes/AKS Network & Infrastructure - Udemy"
+        { title: "Frontend Developer (React)", issuer: "HackerRank" },
+        { title: "SQL (Advanced)", issuer: "HackerRank" },
+        { title: "Applied Machine Learning", issuer: "Coursera" },
+        { title: "IoT Introduction", issuer: "NPTEL" },
+        { title: "Advanced Kubernetes", issuer: "Udemy" }
     ];
 
     return (
-        <section className="py-20 min-h-screen flex flex-col justify-center relative overflow-hidden">
-            <div className="max-w-6xl mx-auto px-6 w-full relative z-10">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="mb-16"
-                >
+        <section className="py-24 relative overflow-hidden min-h-screen flex flex-col justify-center">
+            <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
+
+                {/* Header */}
+                <div className="mb-16">
                     <div className="flex items-center gap-2 text-primary font-mono text-xs mb-4">
                         <Cpu className="w-4 h-4" />
-                        <span>NEURAL_LINK_ESTABLISHED</span>
+                        <span>SYSTEM_CAPABILITIES</span>
                     </div>
-                    <h2 className="text-4xl md:text-5xl font-bold font-display mb-6">
-                        <HackerText text="SKILL_MATRIX" />
+                    <h2 className="text-4xl md:text-6xl font-bold font-display mb-6">
+                        <HackerText text="INSTALLED_MODULES" />
                     </h2>
-                </motion.div>
+                    <div className="h-1 w-24 bg-primary rounded-full" />
+                </div>
 
-                <div className="grid lg:grid-cols-3 gap-12">
-                    {/* Categories */}
-                    <div className="space-y-4">
+                <div className="grid lg:grid-cols-12 gap-12">
+                    {/* Sidebar Navigation */}
+                    <div className="lg:col-span-3 space-y-2">
                         {Object.entries(categories).map(([key, data]) => (
-                            <SkillCategory
+                            <button
                                 key={key}
-                                title={key.toUpperCase()}
-                                icon={data.icon}
-                                isActive={activeCategory === key}
                                 onClick={() => setActiveCategory(key)}
-                            />
+                                className={`w-full text-left px-4 py-3 rounded-lg border transition-all duration-300 flex items-center gap-3 group ${activeCategory === key
+                                        ? 'bg-white/10 border-primary text-white'
+                                        : 'bg-transparent border-transparent text-gray-500 hover:text-white hover:bg-white/5'
+                                    }`}
+                            >
+                                <span className={`p-1.5 rounded ${activeCategory === key ? 'bg-primary text-black' : 'bg-white/10'}`}>
+                                    {data.icon}
+                                </span>
+                                <span className="font-mono text-sm tracking-wider">{data.label}</span>
+                                {activeCategory === key && (
+                                    <div className="ml-auto w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                                )}
+                            </button>
                         ))}
-
-                        {/* Certifications Block */}
-                        <div className="mt-8 p-6 rounded-lg bg-white/5 border border-white/10">
-                            <h3 className="text-white font-bold mb-4 flex items-center gap-2">
-                                <Award className="w-4 h-4 text-secondary" /> CERTIFICATIONS
-                            </h3>
-                            <ul className="space-y-3">
-                                {certifications.map((cert, i) => (
-                                    <li key={i} className="flex items-start gap-2 text-xs text-gray-400">
-                                        <CheckCircle className="w-3 h-3 text-primary mt-0.5 shrink-0" />
-                                        {cert}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
                     </div>
 
-                    {/* Skills Grid */}
-                    <div className="lg:col-span-2">
-                        <div className="bg-black/50 border border-white/10 rounded-xl p-8 min-h-[400px] relative overflow-hidden">
-                            <div className="absolute inset-0 bg-grid opacity-10 pointer-events-none" />
-
-                            <AnimatePresence mode="wait">
-                                <motion.div
-                                    key={activeCategory}
-                                    initial={{ opacity: 0, x: 20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -20 }}
-                                    transition={{ duration: 0.3 }}
-                                    className="grid sm:grid-cols-2 gap-4 relative z-10"
-                                >
-                                    {categories[activeCategory].skills.map((skill, index) => (
-                                        <SkillNode key={skill.name} skill={skill} index={index} />
-                                    ))}
-                                </motion.div>
+                    {/* Main Content */}
+                    <div className="lg:col-span-9 space-y-12">
+                        {/* Skills Grid */}
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                            <AnimatePresence mode="popLayout">
+                                {categories[activeCategory].skills.map((skill, index) => (
+                                    <SkillModule key={skill.name} skill={skill} index={index} />
+                                ))}
                             </AnimatePresence>
+                        </div>
+
+                        {/* Certifications */}
+                        <div className="pt-8 border-t border-white/10">
+                            <h3 className="text-xl font-bold text-white flex items-center gap-3 font-display mb-6">
+                                <Shield className="w-5 h-5 text-secondary" />
+                                SECURITY_CLEARANCES
+                            </h3>
+                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {certifications.map((cert, index) => (
+                                    <CertCard key={index} cert={cert} index={index} />
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
