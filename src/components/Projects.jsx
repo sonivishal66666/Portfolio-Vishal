@@ -46,7 +46,7 @@ const ProjectCard = ({ project, onClick, index }) => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
             viewport={{ once: true }}
-            className="relative w-full md:w-[350px] h-[480px] rounded-xl bg-black/40 border border-white/10 cursor-pointer group perspective-1000"
+            className="relative w-full max-w-sm md:w-[350px] h-[480px] rounded-xl bg-black/40 border border-white/10 cursor-pointer group perspective-1000"
         >
             {/* Neon Glow */}
             <div

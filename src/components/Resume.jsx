@@ -76,7 +76,7 @@ const Resume = () => {
                 animate={{ scale: 1 }}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="fixed bottom-8 right-8 z-50 group"
+                className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 group scale-75 md:scale-100 origin-bottom-right"
             >
                 <div className="relative">
                     {/* Pulsing Glow Background */}

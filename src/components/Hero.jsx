@@ -236,7 +236,7 @@ const Hero = () => {
                     </div>
 
                     <div className="relative mb-8">
-                        <h1 className="text-7xl md:text-9xl font-bold tracking-tighter leading-none font-display relative z-10">
+                        <h1 className="text-5xl md:text-7xl lg:text-9xl font-bold tracking-tighter leading-none font-display relative z-10">
                             <span className="text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">VISHAL</span> <br />
                             <span className="text-primary drop-shadow-[0_0_20px_rgba(0,240,255,0.8)] group-hover:text-white transition-colors duration-300">
                                 SONI
@@ -250,22 +250,22 @@ const Hero = () => {
                         <div className="absolute bottom-0 left-0 w-20 h-20 border-b-2 border-l-2 border-secondary/50 rounded-bl-3xl opacity-50" />
                     </div>
 
-                    <p className="text-xl text-gray-400 mb-8 leading-relaxed max-w-lg border-l-2 border-primary/30 pl-6">
+                    <p className="text-lg md:text-xl text-gray-400 mb-8 leading-relaxed max-w-lg border-l-2 border-primary/30 pl-6">
                         I build AWS & Kubernetes systems that recover automatically under failure.
                     </p>
 
                     <div className="flex flex-wrap gap-4 mb-12">
-                        <a href="/projects" className="cyber-button px-8 py-4 bg-[#00f0ff] text-black font-bold text-sm tracking-widest hover:bg-white transition-colors inline-block text-center">
+                        <a href="/projects" className="cyber-button px-6 py-3 md:px-8 md:py-4 bg-[#00f0ff] text-black font-bold text-xs md:text-sm tracking-widest hover:bg-white transition-colors inline-block text-center">
                             VIEW PROJECTS
                         </a>
-                        <button className="px-8 py-4 border border-white/10 hover:bg-white/5 text-white font-mono text-sm tracking-widest transition-colors">
+                        <button className="px-6 py-3 md:px-8 md:py-4 border border-white/10 hover:bg-white/5 text-white font-mono text-xs md:text-sm tracking-widest transition-colors">
                             VIEW LOGS
                         </button>
                     </div>
 
                     {/* Proof Strip */}
                     <div className="mb-12 border-t border-white/10 pt-6">
-                        <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-mono text-gray-500">
+                        <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs md:text-sm font-mono text-gray-500">
                             <div className="flex items-center gap-2">
                                 <span className="text-primary">AWS</span> • <span>Terraform</span> • <span>Kubernetes</span> • <span>Docker</span> • <span>CI/CD</span>
                             </div>
@@ -275,7 +275,7 @@ const Hero = () => {
                         </div>
                     </div>
 
-                    <div className="mt-12 flex gap-8 text-gray-500 font-mono text-xs">
+                    <div className="mt-12 flex gap-8 text-gray-500 font-mono text-[10px] md:text-xs">
                         <div>
                             <div className="text-primary mb-1">UPTIME</div>
                             <div>99.999%</div>
@@ -296,9 +296,9 @@ const Hero = () => {
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 1, delay: 0.2 }}
-                    className="relative hidden lg:block pointer-events-auto"
+                    className="relative block pointer-events-auto mt-8 lg:mt-0"
                 >
-                    <div className="relative w-full aspect-square">
+                    <div className="relative w-full aspect-square max-w-md mx-auto lg:max-w-none">
                         {/* Holographic Globe Placeholder */}
                         <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-secondary/20 rounded-full blur-3xl animate-pulse-slow" />
 

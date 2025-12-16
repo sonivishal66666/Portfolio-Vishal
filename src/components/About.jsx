@@ -13,7 +13,7 @@ const About = () => {
                     initial={{ opacity: 0, x: -50 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    className="space-y-8 sticky top-24"
+                    className="space-y-8 lg:sticky lg:top-24"
                 >
                     {/* Profile Card - Reduced Size & De-emphasized */}
                     <div className="relative group max-w-xs mx-auto lg:mx-0">
