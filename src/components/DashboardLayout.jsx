@@ -13,7 +13,8 @@ import {
     Clock,
     Menu,
     X,
-    ChevronRight
+    ChevronRight,
+    FileText
 } from 'lucide-react';
 import CustomCursor from './CustomCursor';
 
@@ -58,6 +59,7 @@ const DashboardLayout = ({ children }) => {
         { path: '/skills', label: 'SKILLS', icon: Cpu },
         { path: '/experience', label: 'LOGS', icon: Terminal },
         { path: '/contact', label: 'CONTACT', icon: Wifi },
+        { path: '/resume', label: 'RESUME', icon: FileText },
     ];
 
     return (
@@ -89,6 +91,14 @@ const DashboardLayout = ({ children }) => {
                     </div>
                     <div>CPU: 12%</div>
                     <div>MEM: 4.2GB</div>
+                    <div className="h-4 w-[1px] bg-white/10 mx-2" />
+                    <Link
+                        to="/resume"
+                        className="flex items-center gap-2 text-primary hover:text-white transition-colors cursor-pointer"
+                    >
+                        <FileText className="w-3 h-3" />
+                        <span>RESUME.PDF</span>
+                    </Link>
                 </div>
 
                 <button
@@ -110,6 +120,36 @@ const DashboardLayout = ({ children }) => {
             >
                 {navItems.map((item) => {
                     const isActive = location.pathname === item.path;
+                    if (item.external) {
+                        return (
+                            <a
+                                key={item.label}
+                                href={item.path}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={`group relative flex items-center h-12 px-4 transition-colors ${isActive ? 'text-primary' : 'text-gray-500 hover:text-white'}`}
+                            >
+                                {/* Icon Container */}
+                                <div className="min-w-[32px] flex items-center justify-center">
+                                    <item.icon className="w-5 h-5" />
+                                </div>
+
+                                {/* Label */}
+                                <motion.span
+                                    className="ml-4 font-mono text-sm tracking-wider whitespace-nowrap overflow-hidden"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: isSidebarHovered ? 1 : 0 }}
+                                    transition={{ duration: 0.2 }}
+                                >
+                                    {item.label}
+                                </motion.span>
+
+                                {/* Hover Background */}
+                                <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity -z-10" />
+                            </a>
+                        );
+                    }
+
                     return (
                         <Link
                             key={item.label}
@@ -161,15 +201,29 @@ const DashboardLayout = ({ children }) => {
                 >
                     <div className="space-y-4">
                         {navItems.map((item) => (
-                            <Link
-                                key={item.label}
-                                to={item.path}
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                className="w-full text-left p-4 rounded-lg border border-white/10 hover:bg-white/5 hover:border-primary/50 transition-all flex items-center gap-4"
-                            >
-                                <div className="text-primary"><item.icon className="w-5 h-5" /></div>
-                                <span className="font-mono text-lg">{item.label}</span>
-                            </Link>
+                            item.external ? (
+                                <a
+                                    key={item.label}
+                                    href={item.path}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="w-full text-left p-4 rounded-lg border border-white/10 hover:bg-white/5 hover:border-primary/50 transition-all flex items-center gap-4"
+                                >
+                                    <div className="text-primary"><item.icon className="w-5 h-5" /></div>
+                                    <span className="font-mono text-lg">{item.label}</span>
+                                </a>
+                            ) : (
+                                <Link
+                                    key={item.label}
+                                    to={item.path}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="w-full text-left p-4 rounded-lg border border-white/10 hover:bg-white/5 hover:border-primary/50 transition-all flex items-center gap-4"
+                                >
+                                    <div className="text-primary"><item.icon className="w-5 h-5" /></div>
+                                    <span className="font-mono text-lg">{item.label}</span>
+                                </Link>
+                            )
                         ))}
                     </div>
                 </motion.div>

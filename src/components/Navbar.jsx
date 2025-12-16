@@ -20,6 +20,7 @@ const Navbar = () => {
         { name: 'Projects', href: '#projects' },
         { name: 'Experience', href: '#experience' },
         { name: 'Contact', href: '#contact' },
+        { name: 'RESUME', href: '/resume.pdf', external: true },
     ];
 
     return (
@@ -46,7 +47,9 @@ const Navbar = () => {
                         <a
                             key={link.name}
                             href={link.href}
-                            className="text-sm font-medium text-gray-300 hover:text-primary transition-colors relative group"
+                            target={link.external ? "_blank" : undefined}
+                            rel={link.external ? "noopener noreferrer" : undefined}
+                            className={`text-sm font-medium transition-colors relative group ${link.external ? 'text-primary' : 'text-gray-300 hover:text-primary'}`}
                         >
                             {link.name}
                             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" />
@@ -89,7 +92,9 @@ const Navbar = () => {
                                     key={link.name}
                                     href={link.href}
                                     onClick={() => setIsMobileMenuOpen(false)}
-                                    className="text-lg font-medium text-gray-300 hover:text-primary transition-colors"
+                                    target={link.external ? "_blank" : undefined}
+                                    rel={link.external ? "noopener noreferrer" : undefined}
+                                    className={`text-lg font-medium transition-colors ${link.external ? 'text-primary' : 'text-gray-300 hover:text-primary'}`}
                                 >
                                     {link.name}
                                 </a>
