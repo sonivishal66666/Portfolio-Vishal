@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import {
     LayoutDashboard,
@@ -12,7 +12,8 @@ import {
     Battery,
     Clock,
     Menu,
-    X
+    X,
+    ChevronRight
 } from 'lucide-react';
 import CustomCursor from './CustomCursor';
 
@@ -48,6 +49,7 @@ const SystemStatus = () => {
 
 const DashboardLayout = ({ children }) => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isSidebarHovered, setIsSidebarHovered] = useState(false);
     const location = useLocation();
 
     const navItems = [
@@ -98,30 +100,56 @@ const DashboardLayout = ({ children }) => {
             </div>
 
             {/* Side Navigation (Desktop) */}
-            <div className="fixed left-0 top-12 bottom-0 w-16 border-r border-white/10 bg-black/90 z-40 hidden md:flex flex-col items-center py-8 gap-8">
-                {navItems.map((item) => (
-                    <Link
-                        key={item.label}
-                        to={item.path}
-                        className="group relative flex items-center justify-center w-10 h-10 text-gray-500 hover:text-primary transition-colors"
-                    >
-                        <item.icon className="w-5 h-5" />
+            <motion.div
+                className="fixed left-0 top-12 bottom-0 border-r border-white/10 bg-black/90 z-40 hidden md:flex flex-col py-8 gap-2 overflow-hidden"
+                initial={{ width: 64 }}
+                animate={{ width: isSidebarHovered ? 240 : 64 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                onMouseEnter={() => setIsSidebarHovered(true)}
+                onMouseLeave={() => setIsSidebarHovered(false)}
+            >
+                {navItems.map((item) => {
+                    const isActive = location.pathname === item.path;
+                    return (
+                        <Link
+                            key={item.label}
+                            to={item.path}
+                            className={`group relative flex items-center h-12 px-4 transition-colors ${isActive ? 'text-primary' : 'text-gray-500 hover:text-white'}`}
+                        >
+                            {/* Icon Container */}
+                            <div className="min-w-[32px] flex items-center justify-center">
+                                <item.icon className="w-5 h-5" />
+                            </div>
 
-                        {/* Tooltip */}
-                        <span className="absolute left-14 px-2 py-1 bg-primary/10 border border-primary/20 text-primary text-[10px] font-mono opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                            {item.label}
-                        </span>
+                            {/* Label */}
+                            <motion.span
+                                className="ml-4 font-mono text-sm tracking-wider whitespace-nowrap overflow-hidden"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: isSidebarHovered ? 1 : 0 }}
+                                transition={{ duration: 0.2 }}
+                            >
+                                {item.label}
+                            </motion.span>
 
-                        {/* Active Indicator */}
-                        {location.pathname === item.path && (
-                            <motion.div
-                                layoutId="activeNav"
-                                className="absolute left-0 w-[2px] h-full bg-primary"
-                            />
-                        )}
-                    </Link>
-                ))}
-            </div>
+                            {/* Active Indicator (Left Border) */}
+                            {isActive && (
+                                <motion.div
+                                    layoutId="activeNav"
+                                    className="absolute left-0 top-0 bottom-0 w-[2px] bg-primary"
+                                />
+                            )}
+
+                            {/* Hover Background */}
+                            <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity -z-10" />
+                        </Link>
+                    );
+                })}
+
+                {/* Expand Hint */}
+                <div className="mt-auto px-4 flex items-center justify-center text-gray-700">
+                    <ChevronRight className={`w-4 h-4 transition-transform duration-300 ${isSidebarHovered ? 'rotate-180' : ''}`} />
+                </div>
+            </motion.div>
 
             {/* Mobile Menu Overlay */}
             {isMobileMenuOpen && (
@@ -148,7 +176,7 @@ const DashboardLayout = ({ children }) => {
             )}
 
             {/* Main Content Area */}
-            <main className="pt-12 md:pl-16 min-h-screen relative z-10">
+            <main className="pt-12 md:pl-16 min-h-screen relative z-10 transition-all duration-300">
                 <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-24 pb-32">
                     {children}
                 </div>

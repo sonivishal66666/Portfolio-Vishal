@@ -15,15 +15,15 @@ const About = () => {
                     viewport={{ once: true }}
                     className="space-y-8 sticky top-24"
                 >
-                    {/* Profile Card */}
-                    <div className="relative group">
-                        <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500" />
+                    {/* Profile Card - Reduced Size & De-emphasized */}
+                    <div className="relative group max-w-xs mx-auto lg:mx-0">
+                        <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-2xl blur opacity-10 group-hover:opacity-30 transition duration-500" />
                         <div className="relative bg-black/80 backdrop-blur-xl border border-white/10 rounded-2xl p-2 overflow-hidden">
                             <div className="relative aspect-square rounded-xl overflow-hidden">
                                 <img
                                     src="/Port.jpg"
                                     alt="Vishal Soni"
-                                    className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
+                                    className="w-full h-full object-cover opacity-80 brightness-75 grayscale-[0.3] group-hover:scale-105 transition-transform duration-700"
                                 />
                                 {/* Holographic Overlay */}
                                 <div className="absolute inset-0 bg-scanline opacity-10 pointer-events-none" />
@@ -45,17 +45,17 @@ const About = () => {
                         </div>
                     </div>
 
-                    {/* Quick Stats */}
-                    <div className="grid grid-cols-2 gap-4">
+                    {/* Quick Stats - Reframed */}
+                    <div className="grid grid-cols-2 gap-4 max-w-xs mx-auto lg:mx-0">
                         <div className="bg-white/5 border border-white/10 p-4 rounded-xl hover:border-primary/30 transition-colors">
                             <div className="text-primary mb-2"><Code className="w-5 h-5" /></div>
-                            <div className="text-2xl font-bold text-white font-display">50+</div>
-                            <div className="text-xs text-gray-400 font-mono">PROJECTS DEPLOYED</div>
+                            <div className="text-xl font-bold text-white font-display">Multiple</div>
+                            <div className="text-[10px] text-gray-400 font-mono uppercase">Production Deployments</div>
                         </div>
                         <div className="bg-white/5 border border-white/10 p-4 rounded-xl hover:border-secondary/30 transition-colors">
                             <div className="text-secondary mb-2"><Globe className="w-5 h-5" /></div>
-                            <div className="text-2xl font-bold text-white font-display">Global</div>
-                            <div className="text-xs text-gray-400 font-mono">INFRASTRUCTURE</div>
+                            <div className="text-xl font-bold text-white font-display">Global</div>
+                            <div className="text-[10px] text-gray-400 font-mono uppercase">Infrastructure</div>
                         </div>
                     </div>
                 </motion.div>
@@ -77,80 +77,84 @@ const About = () => {
                         <h2 className="text-4xl md:text-5xl font-bold font-display mb-6 text-white">
                             <HackerText text="ABOUT_ME" />
                         </h2>
-                        <p className="text-gray-400 text-lg leading-relaxed border-l-2 border-white/10 pl-6">
-                            Cloud & DevOps Engineer with a passion for building scalable, serverless architectures.
-                            Specializing in <span className="text-primary">AWS</span>, <span className="text-secondary">Kubernetes</span>, and <span className="text-green-400">Automation</span>.
-                            I transform complex infrastructure challenges into elegant, self-healing systems.
-                        </p>
+                        <div className="space-y-6 border-l-2 border-white/10 pl-6">
+                            <p className="text-gray-300 text-lg leading-relaxed">
+                                I build resilient <span className="text-primary">AWS</span> and <span className="text-secondary">Kubernetes</span> infrastructure using Terraform and CI/CD pipelines. My focus is on production-grade deployments where reliability is non-negotiable.
+                            </p>
+                            <p className="text-gray-300 text-lg leading-relaxed">
+                                I design systems assuming things will break. My goal is to ensure they recover automatically without manual intervention.
+                            </p>
+
+                            {/* Scope Signal */}
+                            <div className="flex items-center gap-2 text-sm text-gray-500 font-mono pt-2">
+                                <Cpu className="w-4 h-4" />
+                                <span>Worked across containerized, serverless, and CI-driven environments.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Problem Solving Logs (Honors) */}
+                    <div className="space-y-6">
+                        <h3 className="text-lg font-bold text-white flex items-center gap-3 font-display uppercase tracking-wider">
+                            <Award className="w-4 h-4 text-yellow-500" />
+                            Problem_Solving_Logs
+                        </h3>
+
+                        <div className="bg-gradient-to-r from-primary/5 to-transparent border-l-2 border-primary p-4 rounded-r-lg">
+                            <div className="flex items-start gap-4">
+                                <div className="p-2 bg-primary/10 rounded-lg text-primary">
+                                    <Zap className="w-5 h-5" />
+                                </div>
+                                <div>
+                                    <h4 className="text-base font-bold text-white mb-1">Algorithmic Efficiency</h4>
+                                    <p className="text-sm text-gray-400 leading-relaxed">
+                                        Demonstrated advanced problem-solving skills by securing <strong className="text-white">AIR 207</strong> in CodeVita Season 13 (Round 1) and <strong className="text-white">Rank 3</strong> at VIT Bhopal University.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     {/* Education Module */}
-                    <div className="space-y-6">
-                        <h3 className="text-xl font-bold text-white flex items-center gap-3 font-display">
-                            <BookOpen className="w-5 h-5 text-secondary" />
-                            ACADEMIC_LOGS
+                    <div className="space-y-4">
+                        <h3 className="text-sm font-bold text-white flex items-center gap-3 font-display uppercase tracking-wider">
+                            <BookOpen className="w-4 h-4 text-secondary" />
+                            Academic_Background
                         </h3>
 
-                        <div className="relative group">
-                            <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-500" />
-                            <div className="relative bg-black/60 border border-white/10 rounded-xl p-6 hover:border-primary/50 transition-colors">
-                                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                        <div className="grid gap-4">
+                            {/* University */}
+                            <div className="relative border-l-2 border-white/10 pl-4 py-2 flex flex-col gap-2">
+                                <div className="flex justify-between items-start">
                                     <div>
-                                        <h4 className="text-lg font-bold text-white">VIT Bhopal University</h4>
-                                        <p className="text-sm text-primary font-mono">B.Tech CSE (Cloud Computing & Automation)</p>
+                                        <h4 className="text-base font-bold text-white">Vellore Institute of Technology Bhopal</h4>
+                                        <p className="text-sm text-gray-400 font-mono">B.Tech CSE (Cloud Computing & Automation)</p>
                                     </div>
-                                    <div className="px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-mono flex items-center gap-2 w-fit">
-                                        <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                                        IN_PROGRESS
+                                    <div className="text-right">
+                                        <div className="text-xs text-primary font-mono">2023 - 2027</div>
                                     </div>
                                 </div>
-                                <div className="flex justify-between items-end text-xs text-gray-500 font-mono border-t border-white/5 pt-4">
-                                    <span>2023 - 2027 (EXPECTED)</span>
-                                    <span>BHOPAL, MP</span>
-                                </div>
                             </div>
-                        </div>
 
-                        <div className="relative bg-black/40 border border-white/5 rounded-xl p-6 hover:border-white/20 transition-colors">
-                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
-                                <div>
-                                    <h4 className="text-lg font-bold text-gray-300">Tagore Public School</h4>
-                                    <p className="text-sm text-gray-500 font-mono">Secondary Education</p>
+                            {/* School */}
+                            <div className="relative border-l-2 border-white/10 pl-4 py-2 flex flex-col gap-2">
+                                <div className="flex justify-between items-start">
+                                    <div>
+                                        <h4 className="text-base font-bold text-white">Tagore Public School</h4>
+                                        <p className="text-sm text-gray-400 font-mono">Secondary Education</p>
+                                    </div>
+                                    <div className="text-right">
+                                        <div className="text-xs text-green-400 font-mono">COMPLETED</div>
+                                    </div>
                                 </div>
-                                <div className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-gray-400 text-xs font-mono w-fit">
-                                    COMPLETED
-                                </div>
-                            </div>
-                            <div className="grid grid-cols-2 gap-4 text-sm text-gray-400 mt-4">
-                                <div className="bg-white/5 p-2 rounded text-center border border-white/5">
-                                    <div className="text-xs text-gray-500 mb-1">CLASS XII</div>
-                                    <div className="font-bold text-white">90%</div>
-                                </div>
-                                <div className="bg-white/5 p-2 rounded text-center border border-white/5">
-                                    <div className="text-xs text-gray-500 mb-1">CLASS X</div>
-                                    <div className="font-bold text-white">85%</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Achievements Module */}
-                    <div className="space-y-6">
-                        <h3 className="text-xl font-bold text-white flex items-center gap-3 font-display">
-                            <Award className="w-5 h-5 text-yellow-500" />
-                            HONORS_&_AWARDS
-                        </h3>
-
-                        <div className="bg-gradient-to-r from-primary/10 to-transparent border-l-4 border-primary p-6 rounded-r-xl">
-                            <div className="flex items-start gap-4">
-                                <div className="p-3 bg-primary/20 rounded-lg text-primary">
-                                    <Zap className="w-6 h-6" />
-                                </div>
-                                <div>
-                                    <h4 className="text-lg font-bold text-white mb-1">Top Performer</h4>
-                                    <p className="text-gray-300 leading-relaxed">
-                                        Secured <strong className="text-white">AIR 207</strong> in CodeVita Season 13 (Round 1) and achieved <strong className="text-white">Rank 3</strong> at VIT Bhopal University.
-                                    </p>
+                                {/* Marks */}
+                                <div className="flex gap-4 mt-1">
+                                    <div className="px-3 py-1 bg-white/5 rounded border border-white/10 text-xs font-mono text-gray-300">
+                                        CLASS XII: <span className="text-white font-bold">90%</span>
+                                    </div>
+                                    <div className="px-3 py-1 bg-white/5 rounded border border-white/10 text-xs font-mono text-gray-300">
+                                        CLASS X: <span className="text-white font-bold">85%</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

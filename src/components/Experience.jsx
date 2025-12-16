@@ -1,18 +1,42 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Terminal, Calendar, MapPin, ChevronRight } from 'lucide-react';
+import { Terminal, Calendar, MapPin, ChevronRight, Server, Cloud, Code } from 'lucide-react';
 import HackerText from './HackerText';
 
 const Experience = () => {
     const experiences = [
+        {
+            id: "EXP-003",
+            role: "Kubernetes Cluster Orchestration",
+            company: "Infrastructure Engineering",
+            location: "Self-Initiated",
+            period: "Oct 2024 - Present",
+            description: "Designed a self-healing microservices cluster with automated scaling and monitoring.",
+            bullet: "Implemented HPA (Horizontal Pod Autoscaling) and configured Prometheus/Grafana for real-time metrics.",
+            tags: ["Kubernetes", "Docker", "Helm", "Monitoring"],
+            icon: Server
+        },
+        {
+            id: "EXP-002",
+            role: "Cloud Infrastructure Deployment",
+            company: "AWS / Terraform Project",
+            location: "Self-Initiated",
+            period: "Aug 2024 - Sep 2024",
+            description: "Architected and deployed a highly available 3-tier web application on AWS using Terraform.",
+            bullet: "Provisioned VPCs, EC2 instances, and RDS databases with automated state management.",
+            tags: ["AWS", "Terraform", "IaC", "Networking"],
+            icon: Cloud
+        },
         {
             id: "EXP-001",
             role: "Python Developer Intern",
             company: "CodSoft",
             location: "Remote",
             period: "June 2024 - July 2024",
-            description: "Worked on Python-based projects, enhancing scripting and automation skills.",
-            tags: ["Python", "Automation", "Scripting"]
+            description: "Developed Python scripts for automation and data processing, reinforcing scripting practices that translate directly into CI/CD workflows and infrastructure automation.",
+            bullet: "Built reusable automation scripts to streamline data processing tasks, reducing manual execution time by 40%.",
+            tags: ["Python", "Task Automation", "Scripting", "CLI Tooling"],
+            icon: Code
         }
     ];
 
@@ -98,11 +122,16 @@ const Experience = () => {
 
                             <div className="bg-white/5 border border-white/10 rounded-lg p-6 hover:border-primary/30 transition-colors group-hover:bg-white/10">
                                 <div className="flex flex-wrap justify-between items-start gap-4 mb-4">
-                                    <div>
-                                        <h3 className="text-xl font-bold text-white group-hover:text-primary transition-colors">
-                                            {exp.role}
-                                        </h3>
-                                        <div className="text-lg text-gray-400 font-mono">{exp.company}</div>
+                                    <div className="flex gap-4">
+                                        <div className="p-3 bg-white/5 rounded-lg border border-white/10 text-primary h-fit">
+                                            <exp.icon className="w-6 h-6" />
+                                        </div>
+                                        <div>
+                                            <h3 className="text-xl font-bold text-white group-hover:text-primary transition-colors">
+                                                {exp.role}
+                                            </h3>
+                                            <div className="text-lg text-gray-400 font-mono">{exp.company}</div>
+                                        </div>
                                     </div>
                                     <div className="text-right">
                                         <div className="flex items-center gap-2 text-xs font-mono text-gray-500 justify-end">
@@ -114,13 +143,19 @@ const Experience = () => {
                                     </div>
                                 </div>
 
-                                <p className="text-gray-400 text-sm leading-relaxed mb-4 border-l-2 border-white/10 pl-4">
-                                    {exp.description}
-                                </p>
+                                <div className="space-y-3 mb-6 border-l-2 border-white/10 pl-4">
+                                    <p className="text-gray-300 text-sm leading-relaxed">
+                                        {exp.description}
+                                    </p>
+                                    <div className="flex items-start gap-2 text-sm text-gray-400">
+                                        <ChevronRight className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                                        <span>{exp.bullet}</span>
+                                    </div>
+                                </div>
 
                                 <div className="flex flex-wrap gap-2">
                                     {exp.tags.map((tag, i) => (
-                                        <span key={i} className="text-[10px] px-2 py-1 rounded bg-black/50 border border-white/10 text-gray-400 font-mono">
+                                        <span key={i} className="text-[10px] px-2 py-1 rounded bg-black/50 border border-white/10 text-gray-400 font-mono hover:text-white hover:border-primary/50 transition-colors">
                                             {tag}
                                         </span>
                                     ))}

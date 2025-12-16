@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Cpu, Code, Globe, Database, Terminal, Award, CheckCircle, Shield, Zap, Layers } from 'lucide-react';
+import { Cpu, Code, Globe, Database, Terminal, Award, CheckCircle, Shield, Layers } from 'lucide-react';
 import HackerText from './HackerText';
 
 const SkillModule = ({ skill, index }) => (
@@ -33,20 +33,16 @@ const SkillModule = ({ skill, index }) => (
                 </div>
 
                 <div>
-                    <h3 className="text-lg font-bold text-white mb-1 group-hover:text-primary transition-colors">{skill.name}</h3>
-                    <div className="flex items-center gap-2">
-                        {/* Signal Strength Indicator (Visual only, no numbers) */}
-                        <div className="flex gap-1">
-                            {[...Array(5)].map((_, i) => (
-                                <div
-                                    key={i}
-                                    className={`w-1 h-3 rounded-full ${i < skill.level ? 'bg-primary' : 'bg-white/10'} transition-colors duration-300 group-hover:shadow-[0_0_5px_#00f0ff]`}
-                                />
-                            ))}
-                        </div>
-                        <span className="text-[10px] font-mono text-gray-500 ml-2 group-hover:text-white transition-colors">
-                            {skill.level >= 5 ? 'MAX_CAPACITY' : 'OPTIMIZED'}
-                        </span>
+                    <div className="flex justify-between items-center mb-1">
+                        <h3 className="text-lg font-bold text-white group-hover:text-primary transition-colors">{skill.name}</h3>
+                        {skill.type === 'academic' && (
+                            <span className="text-[10px] px-1.5 py-0.5 rounded bg-white/5 text-gray-500 border border-white/5">
+                                ACADEMIC
+                            </span>
+                        )}
+                    </div>
+                    <div className="text-xs font-mono text-gray-400 group-hover:text-white transition-colors">
+                        {skill.capability}
                     </div>
                 </div>
             </div>
@@ -89,7 +85,7 @@ const CertCard = ({ cert, index }) => (
 );
 
 const Skills = () => {
-    const [activeCategory, setActiveCategory] = useState('languages');
+    const [activeCategory, setActiveCategory] = useState('devops'); // Default to DevOps
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
     const handleMouseMove = (e) => {
@@ -97,49 +93,49 @@ const Skills = () => {
         setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
     };
 
-    // Level: 1-5 (Visual bars only)
+    // Reordered Categories: DevOps -> Cloud -> Languages -> Frameworks
     const categories = {
-        languages: {
-            icon: <Code className="w-4 h-4" />,
-            label: "LANGUAGES",
+        devops: {
+            icon: <Terminal className="w-4 h-4" />,
+            label: "DEVOPS",
             skills: [
-                { name: "Python", level: 5 },
-                { name: "Java", level: 4 },
-                { name: "C++", level: 4 },
-                { name: "PHP", level: 3 },
-                { name: "JavaScript", level: 5 },
-                { name: "SQL", level: 5 }
+                { name: "Docker", capability: "Containerization & Multi-stage Builds" },
+                { name: "Kubernetes", capability: "Cluster Orchestration & Helm" },
+                { name: "Jenkins", capability: "Pipeline as Code (Groovy)" },
+                { name: "Terraform", capability: "Infrastructure as Code (IaC)" },
+                { name: "GitHub Actions", capability: "CI/CD Automation" }
             ]
         },
         cloud: {
             icon: <Globe className="w-4 h-4" />,
             label: "CLOUD_INFRA",
             skills: [
-                { name: "AWS Lambda", level: 5 },
-                { name: "Amazon RDS", level: 4 },
-                { name: "Amazon S3", level: 5 },
-                { name: "Cloud Run", level: 3 },
-                { name: "Firebase", level: 4 }
+                { name: "AWS Lambda", capability: "Serverless Functions" },
+                { name: "Amazon RDS", capability: "Managed Database Operations" },
+                { name: "Amazon S3", capability: "Object Storage & Lifecycle" },
+                { name: "Cloud Run", capability: "Container Deployment" },
+                { name: "Firebase", capability: "Realtime DB & Auth" }
             ]
         },
-        devops: {
-            icon: <Terminal className="w-4 h-4" />,
-            label: "DEVOPS",
+        languages: {
+            icon: <Code className="w-4 h-4" />,
+            label: "LANGUAGES",
             skills: [
-                { name: "Docker", level: 5 },
-                { name: "Kubernetes", level: 4 },
-                { name: "Jenkins", level: 4 },
-                { name: "Terraform", level: 4 },
-                { name: "GitHub Actions", level: 5 }
+                { name: "Python", capability: "Automation / Scripting / Tooling" },
+                { name: "JavaScript", capability: "Frontend + CI Tooling" },
+                { name: "SQL", capability: "Query Design / Optimization" },
+                { name: "Java", capability: "Academic / Object-Oriented", type: "academic" },
+                { name: "C++", capability: "Systems-Level / Academic", type: "academic" },
+                { name: "PHP", capability: "Legacy Support / Academic", type: "academic" }
             ]
         },
         frameworks: {
             icon: <Database className="w-4 h-4" />,
             label: "FRAMEWORKS",
             skills: [
-                { name: "React", level: 5 },
-                { name: "ArgoCD", level: 4 },
-                { name: "JUnit", level: 3 }
+                { name: "React", capability: "Component-Based UI" },
+                { name: "ArgoCD", capability: "GitOps Deployment" },
+                { name: "JUnit", capability: "Unit Testing" }
             ]
         }
     };
@@ -216,8 +212,8 @@ const Skills = () => {
                                 key={key}
                                 onClick={() => setActiveCategory(key)}
                                 className={`w-full text-left px-4 py-3 rounded-lg border transition-all duration-300 flex items-center gap-3 group ${activeCategory === key
-                                        ? 'bg-white/10 border-primary text-white'
-                                        : 'bg-transparent border-transparent text-gray-500 hover:text-white hover:bg-white/5'
+                                    ? 'bg-white/10 border-primary text-white'
+                                    : 'bg-transparent border-transparent text-gray-500 hover:text-white hover:bg-white/5'
                                     }`}
                             >
                                 <span className={`p-1.5 rounded ${activeCategory === key ? 'bg-primary text-black' : 'bg-white/10'}`}>
@@ -246,7 +242,7 @@ const Skills = () => {
                         <div className="pt-8 border-t border-white/10">
                             <h3 className="text-xl font-bold text-white flex items-center gap-3 font-display mb-6">
                                 <Shield className="w-5 h-5 text-secondary" />
-                                SECURITY_CLEARANCES
+                                VERIFIED_CREDENTIALS
                             </h3>
                             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 {certifications.map((cert, index) => (

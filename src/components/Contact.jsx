@@ -1,155 +1,268 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Send, Lock, Mail, MessageSquare, User, CheckCircle, Loader, Globe } from 'lucide-react';
-import Globe3D from './Globe3D';
+import { Mail, Phone, Linkedin, Github, ExternalLink, Copy, Check, Globe, Cpu, ArrowRight } from 'lucide-react';
+import HackerText from './HackerText';
 
-const Contact = () => {
-    const [formState, setFormState] = useState('idle'); // idle, sending, sent
+const ContactCard = ({ icon: Icon, label, value, href, action, color = "primary", isPrimary = false, className = "", mask = null }) => {
+    const [copied, setCopied] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setFormState('sending');
-        // Simulate network request
-        setTimeout(() => {
-            setFormState('sent');
-            setTimeout(() => setFormState('idle'), 3000);
-        }, 2000);
+    const handleClick = () => {
+        if (action === 'copy') {
+            navigator.clipboard.writeText(value);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        }
+        // If it's a link, we let the <a> tag handle it naturally, or window.open if needed
     };
 
-    return (
-        <section className="py-20 relative min-h-screen flex items-center justify-center overflow-hidden">
-            {/* 3D Background */}
-            <Globe3D />
+    const displayValue = mask && !isHovered ? mask : value;
 
-            <div className="max-w-6xl mx-auto px-6 w-full grid lg:grid-cols-2 gap-12 items-center relative z-10">
+    const CardContent = () => (
+        <div className={`relative bg-black/60 backdrop-blur-xl border ${isPrimary ? `border-${color}/40` : 'border-white/10'} rounded-xl p-6 h-full flex flex-col justify-between hover:border-${color}/50 transition-colors ${className}`}>
 
-                {/* Left: Context */}
-                <motion.div
-                    initial={{ opacity: 0, x: -50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    className="bg-black/40 backdrop-blur-md p-8 rounded-2xl border border-white/10"
-                >
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-mono mb-6">
-                        <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                        SECURE UPLINK ESTABLISHED
+            {/* Header */}
+            <div className="flex justify-between items-start mb-4">
+                <div className={`p-3 rounded-lg bg-${color}/10 border border-${color}/20 text-${color}`}>
+                    <Icon className="w-6 h-6" />
+                </div>
+                {action === 'copy' && (
+                    <div className="p-2 text-gray-500 group-hover:text-white transition-colors">
+                        {copied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
                     </div>
+                )}
+                {href && (
+                    <div className="p-2 text-gray-500 group-hover:text-white transition-colors">
+                        <ExternalLink className="w-4 h-4" />
+                    </div>
+                )}
+            </div>
 
-                    <h2 className="text-4xl md:text-5xl font-bold font-display mb-6">
-                        GLOBAL <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-                            CONNECTIVITY
-                        </span>
+            {/* Content */}
+            <div>
+                <div className="text-xs font-mono text-gray-500 mb-1 uppercase tracking-wider">{label}</div>
+                <div className={`font-bold text-white break-all font-display group-hover:text-${color} transition-colors ${isPrimary ? 'text-xl md:text-2xl' : 'text-lg'} ${mask && !isHovered ? 'italic text-gray-400' : ''}`}>
+                    {displayValue}
+                </div>
+            </div>
+
+            {/* Decorative Corner */}
+            <div className={`absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-${color}/10 to-transparent rounded-tr-xl opacity-0 group-hover:opacity-100 transition-opacity`} />
+        </div>
+    );
+
+    if (href) {
+        return (
+            <motion.a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.02, y: -5 }}
+                className={`relative group cursor-pointer block ${isPrimary ? 'md:col-span-1' : ''}`}
+            >
+                <div className={`absolute -inset-0.5 bg-gradient-to-r from-${color}/50 to-transparent rounded-xl blur opacity-20 group-hover:opacity-60 transition duration-500`} />
+                <CardContent />
+            </motion.a>
+        );
+    }
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            whileHover={{ scale: 1.02, y: -5 }}
+            onHoverStart={() => setIsHovered(true)}
+            onHoverEnd={() => setIsHovered(false)}
+            onClick={handleClick}
+            className={`relative group cursor-pointer ${isPrimary ? 'md:col-span-2' : ''}`}
+        >
+            <div className={`absolute -inset-0.5 bg-gradient-to-r from-${color}/50 to-transparent rounded-xl blur opacity-20 group-hover:opacity-60 transition duration-500`} />
+            <CardContent />
+        </motion.div>
+    );
+};
+
+const Contact = () => {
+    return (
+        <section className="py-24 relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-black perspective-1000">
+            {/* Digital Horizon Background */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                {/* Moving Grid Floor */}
+                <div
+                    className="absolute inset-[-100%] opacity-30"
+                    style={{
+                        backgroundImage: `
+                            linear-gradient(transparent 0%, #00f0ff 2px, transparent 3px),
+                            linear-gradient(90deg, transparent 0%, #00f0ff 2px, transparent 3px)
+                        `,
+                        backgroundSize: '100px 100px',
+                        transform: 'perspective(500px) rotateX(60deg)',
+                        transformOrigin: 'center top',
+                        animation: 'grid-move 20s linear infinite'
+                    }}
+                />
+
+                {/* Horizon Glow */}
+                <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-primary/20 via-transparent to-transparent opacity-50 blur-3xl" />
+                <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black via-black to-transparent" />
+
+                {/* Floating Particles */}
+                {[...Array(20)].map((_, i) => (
+                    <motion.div
+                        key={i}
+                        initial={{ opacity: 0, y: Math.random() * 1000 }}
+                        animate={{
+                            opacity: [0, 0.5, 0],
+                            y: [Math.random() * 1000, Math.random() * -1000]
+                        }}
+                        transition={{
+                            duration: Math.random() * 10 + 10,
+                            repeat: Infinity,
+                            ease: "linear"
+                        }}
+                        className="absolute w-1 h-1 bg-primary rounded-full"
+                        style={{ left: `${Math.random() * 100}%` }}
+                    />
+                ))}
+            </div>
+
+            <style>{`
+                @keyframes grid-move {
+                    0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+                    100% { transform: perspective(500px) rotateX(60deg) translateY(100px); }
+                }
+            `}</style>
+
+            <div className="max-w-5xl mx-auto px-6 w-full relative z-10">
+
+                {/* Header */}
+                <div className="text-center mb-16">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-mono mb-6 backdrop-blur-md"
+                    >
+                        <Globe className="w-3 h-3 animate-pulse" />
+                        <span>GLOBAL_CONNECTIVITY_HUB</span>
+                    </motion.div>
+
+                    <h2 className="text-5xl md:text-7xl font-bold font-display mb-6">
+                        <HackerText text="INITIATE_UPLINK" />
                     </h2>
 
-                    <p className="text-gray-400 text-lg mb-8 leading-relaxed">
-                        Initialize handshake protocol. Transmit your project parameters for immediate analysis and architectural consultation.
+                    <p className="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed font-light">
+                        Reach out for <span className="text-white font-semibold">internships</span>, <span className="text-white font-semibold">full-time roles</span>, or technical discussions.
                     </p>
+                </div>
 
-                    <div className="grid grid-cols-2 gap-4 font-mono text-sm">
-                        <div className="p-4 rounded bg-white/5 border border-white/10">
-                            <div className="text-xs text-gray-500 mb-1">EMAIL</div>
-                            <div className="text-primary truncate" title="vishalsoni6350@gmail.com">vishalsoni6350@gmail.com</div>
-                        </div>
-                        <div className="p-4 rounded bg-white/5 border border-white/10">
-                            <div className="text-xs text-gray-500 mb-1">PHONE</div>
-                            <div className="text-primary">+91 6375188332</div>
-                        </div>
-                        <div className="col-span-2 p-4 rounded bg-white/5 border border-white/10">
-                            <div className="text-xs text-gray-500 mb-1">LINKEDIN</div>
-                            <div className="text-primary">linkedin.com/in/vishalsoni18</div>
-                        </div>
-                    </div>
-                </motion.div>
+                {/* Contact Grid */}
+                <div className="grid md:grid-cols-2 gap-6 mb-12">
 
-                {/* Right: Form Interface */}
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    className="bg-black/80 border border-primary/30 rounded-xl p-1 relative overflow-hidden shadow-[0_0_50px_rgba(0,240,255,0.1)]"
-                >
-                    {/* Holographic Border Effect */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-primary/20 to-transparent opacity-20 pointer-events-none" />
-
-                    <div className="bg-black rounded-lg p-8 relative z-10">
-                        <div className="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
-                            <div className="flex items-center gap-2 text-primary font-mono text-sm">
-                                <Lock className="w-4 h-4" />
-                                <span>TRANSMISSION_MODULE_V2</span>
-                            </div>
-                            <div className="flex gap-1">
-                                <div className="w-2 h-2 rounded-full bg-red-500" />
-                                <div className="w-2 h-2 rounded-full bg-yellow-500" />
-                                <div className="w-2 h-2 rounded-full bg-green-500" />
-                            </div>
-                        </div>
-
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                            <div className="space-y-2">
-                                <label className="text-xs font-mono text-gray-500 flex items-center gap-2">
-                                    <User className="w-3 h-3" /> SOURCE_ID
-                                </label>
-                                <input
-                                    type="text"
-                                    placeholder="ENTER IDENTIFIER"
-                                    className="w-full bg-white/5 border border-white/10 rounded p-3 text-white focus:border-primary focus:outline-none focus:bg-white/10 transition-all font-mono text-sm placeholder:text-gray-700"
-                                    required
-                                />
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-xs font-mono text-gray-500 flex items-center gap-2">
-                                    <Mail className="w-3 h-3" /> RETURN_PATH
-                                </label>
-                                <input
-                                    type="email"
-                                    placeholder="ENTER CONTACT VECTOR"
-                                    className="w-full bg-white/5 border border-white/10 rounded p-3 text-white focus:border-primary focus:outline-none focus:bg-white/10 transition-all font-mono text-sm placeholder:text-gray-700"
-                                    required
-                                />
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-xs font-mono text-gray-500 flex items-center gap-2">
-                                    <MessageSquare className="w-3 h-3" /> DATA_PACKET
-                                </label>
-                                <textarea
-                                    rows="4"
-                                    placeholder="INPUT MESSAGE STREAM..."
-                                    className="w-full bg-white/5 border border-white/10 rounded p-3 text-white focus:border-primary focus:outline-none focus:bg-white/10 transition-all font-mono text-sm placeholder:text-gray-700 resize-none"
-                                    required
-                                />
-                            </div>
-
-                            <button
-                                type="submit"
-                                disabled={formState !== 'idle'}
-                                className={`w-full py-4 font-bold text-sm tracking-widest flex items-center justify-center gap-2 transition-all duration-300 relative overflow-hidden group ${formState === 'sent'
-                                    ? 'bg-success text-black'
-                                    : 'bg-primary text-black'
-                                    }`}
-                            >
-                                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                                <div className="relative flex items-center gap-2">
-                                    {formState === 'idle' && (
-                                        <>
-                                            <Send className="w-4 h-4" /> INITIATE UPLINK
-                                        </>
-                                    )}
-                                    {formState === 'sending' && (
-                                        <>
-                                            <Loader className="w-4 h-4 animate-spin" /> ENCRYPTING...
-                                        </>
-                                    )}
-                                    {formState === 'sent' && (
-                                        <>
-                                            <CheckCircle className="w-4 h-4" /> PACKET SENT
-                                        </>
-                                    )}
+                    {/* Primary: Email (Full Width on Mobile, Span 2 on Desktop if needed, but here we balance with LinkedIn) */}
+                    {/* Actually, let's make Email span full width or be very prominent */}
+                    <div className="md:col-span-2">
+                        <motion.a
+                            href="mailto:vishalsoni6350@gmail.com"
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            whileHover={{ scale: 1.01 }}
+                            className="relative group cursor-pointer block"
+                        >
+                            <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-secondary rounded-xl blur opacity-30 group-hover:opacity-70 transition duration-500" />
+                            <div className="relative bg-black/80 backdrop-blur-xl border border-primary/50 rounded-xl p-8 flex flex-col md:flex-row items-center justify-between gap-6 hover:border-primary transition-colors">
+                                <div className="flex items-center gap-6">
+                                    <div className="p-4 rounded-full bg-primary/20 text-primary">
+                                        <Mail className="w-8 h-8" />
+                                    </div>
+                                    <div className="text-center md:text-left">
+                                        <div className="text-sm font-mono text-gray-400 uppercase tracking-wider mb-1">Primary Communication Channel</div>
+                                        <div className="text-2xl md:text-3xl font-bold text-white font-display">vishalsoni6350@gmail.com</div>
+                                    </div>
                                 </div>
-                            </button>
-                        </form>
+                                <div className="flex items-center gap-3">
+                                    <span className="text-sm font-mono text-primary group-hover:translate-x-1 transition-transform">SEND TRANSMISSION</span>
+                                    <ArrowRight className="w-5 h-5 text-primary group-hover:translate-x-1 transition-transform" />
+                                </div>
+                            </div>
+                        </motion.a>
+                    </div>
+
+                    {/* Secondary: LinkedIn & GitHub */}
+                    <ContactCard
+                        icon={Linkedin}
+                        label="Professional Network"
+                        value="linkedin.com/in/vishalsoni18"
+                        href="https://linkedin.com/in/vishalsoni18"
+                        color="blue-500"
+                        className="border-blue-500/30 hover:border-blue-500/60"
+                    />
+
+                    <ContactCard
+                        icon={Github}
+                        label="Code Repository"
+                        value="github.com/sonivishal66666"
+                        href="https://github.com/sonivishal66666/"
+                        color="purple-500"
+                        className="opacity-80 hover:opacity-100"
+                    />
+                </div>
+
+                {/* Tertiary: Phone & Availability */}
+                <div className="grid md:grid-cols-3 gap-6">
+                    <ContactCard
+                        icon={Phone}
+                        label="Secure Line"
+                        value="Shared on request"
+                        color="green-500"
+                        className="opacity-60 hover:opacity-100"
+                    />
+
+                    {/* Availability Card */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 }}
+                        className="relative group md:col-span-2"
+                    >
+                        <div className="absolute -inset-0.5 bg-gradient-to-r from-white/5 to-transparent rounded-xl blur opacity-10 group-hover:opacity-30 transition duration-500" />
+                        <div className="relative bg-black/60 backdrop-blur-xl border border-white/10 rounded-xl p-6 h-full flex flex-col md:flex-row justify-between items-center gap-4 hover:border-white/20 transition-colors">
+                            <div className="flex items-center gap-4">
+                                <div className="relative">
+                                    <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
+                                    <div className="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-75" />
+                                </div>
+                                <div>
+                                    <div className="text-lg font-bold text-white">OPEN TO DEVOPS / CLOUD ENGINEERING ROLES</div>
+                                    <div className="text-xs font-mono text-gray-500">AVAILABLE FOR IMMEDIATE DEPLOYMENT</div>
+                                </div>
+                            </div>
+                            <div className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-gray-400">
+                                REMOTE / HYBRID / ONSITE
+                            </div>
+                        </div>
+                    </motion.div>
+                </div>
+
+                {/* Footer Note */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.8 }}
+                    className="mt-20 text-center"
+                >
+                    <div className="inline-block p-4 rounded-lg bg-white/5 border border-white/10 backdrop-blur-md">
+                        <div className="flex items-center gap-3 text-sm text-gray-400 font-mono">
+                            <Cpu className="w-4 h-4 text-primary" />
+                            <span>ENCRYPTED TRANSMISSION PROTOCOL: V.2.0.4</span>
+                        </div>
                     </div>
                 </motion.div>
 
