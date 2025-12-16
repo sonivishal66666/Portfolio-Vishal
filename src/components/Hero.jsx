@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Github, FileText, Terminal, Shield, Cpu, Globe } from 'lucide-react';
 import Scene3D from './Scene3D';
@@ -255,12 +256,12 @@ const Hero = () => {
                     </p>
 
                     <div className="flex flex-wrap gap-4 mb-12">
-                        <a href="/projects" className="cyber-button px-6 py-3 md:px-8 md:py-4 bg-[#00f0ff] text-black font-bold text-xs md:text-sm tracking-widest hover:bg-white transition-colors inline-block text-center">
+                        <Link to="/projects" className="cyber-button px-6 py-3 md:px-8 md:py-4 bg-[#00f0ff] text-black font-bold text-xs md:text-sm tracking-widest hover:bg-white transition-colors inline-block text-center">
                             VIEW PROJECTS
-                        </a>
-                        <button className="px-6 py-3 md:px-8 md:py-4 border border-white/10 hover:bg-white/5 text-white font-mono text-xs md:text-sm tracking-widest transition-colors">
+                        </Link>
+                        <Link to="/experience" className="px-6 py-3 md:px-8 md:py-4 border border-white/10 hover:bg-white/5 text-white font-mono text-xs md:text-sm tracking-widest transition-colors inline-block text-center">
                             VIEW LOGS
-                        </button>
+                        </Link>
                     </div>
 
                     {/* Proof Strip */}

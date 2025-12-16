@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Cloud, Github, Linkedin, Mail } from 'lucide-react';
 
@@ -15,11 +16,11 @@ const Navbar = () => {
     }, []);
 
     const navLinks = [
-        { name: 'About', href: '#about' },
-        { name: 'Skills', href: '#skills' },
-        { name: 'Projects', href: '#projects' },
-        { name: 'Experience', href: '#experience' },
-        { name: 'Contact', href: '#contact' },
+        { name: 'About', href: '/' },
+        { name: 'Skills', href: '/skills' },
+        { name: 'Projects', href: '/projects' },
+        { name: 'Experience', href: '/experience' },
+        { name: 'Contact', href: '/contact' },
         { name: 'RESUME', href: '/resume.pdf', external: true },
     ];
 
@@ -44,16 +45,27 @@ const Navbar = () => {
                 {/* Desktop Nav */}
                 <div className="hidden md:flex items-center gap-8">
                     {navLinks.map((link) => (
-                        <a
-                            key={link.name}
-                            href={link.href}
-                            target={link.external ? "_blank" : undefined}
-                            rel={link.external ? "noopener noreferrer" : undefined}
-                            className={`text-sm font-medium transition-colors relative group ${link.external ? 'text-primary' : 'text-gray-300 hover:text-primary'}`}
-                        >
-                            {link.name}
-                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" />
-                        </a>
+                        link.external ? (
+                            <a
+                                key={link.name}
+                                href={link.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-sm font-medium transition-colors relative group text-primary"
+                            >
+                                {link.name}
+                                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" />
+                            </a>
+                        ) : (
+                            <Link
+                                key={link.name}
+                                to={link.href}
+                                className="text-sm font-medium transition-colors relative group text-gray-300 hover:text-primary"
+                            >
+                                {link.name}
+                                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" />
+                            </Link>
+                        )
                     ))}
 
                     <div className="h-6 w-px bg-white/10 mx-2" />
@@ -88,16 +100,27 @@ const Navbar = () => {
                     >
                         <div className="px-6 py-8 flex flex-col gap-6">
                             {navLinks.map((link) => (
-                                <a
-                                    key={link.name}
-                                    href={link.href}
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                    target={link.external ? "_blank" : undefined}
-                                    rel={link.external ? "noopener noreferrer" : undefined}
-                                    className={`text-lg font-medium transition-colors ${link.external ? 'text-primary' : 'text-gray-300 hover:text-primary'}`}
-                                >
-                                    {link.name}
-                                </a>
+                                link.external ? (
+                                    <a
+                                        key={link.name}
+                                        href={link.href}
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-lg font-medium transition-colors text-primary"
+                                    >
+                                        {link.name}
+                                    </a>
+                                ) : (
+                                    <Link
+                                        key={link.name}
+                                        to={link.href}
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="text-lg font-medium transition-colors text-gray-300 hover:text-primary"
+                                    >
+                                        {link.name}
+                                    </Link>
+                                )
                             ))}
                             <div className="flex gap-6 pt-6 border-t border-white/10">
                                 <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">

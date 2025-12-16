@@ -141,7 +141,7 @@ const SidePanel = ({ project, onClose }) => {
                 className="fixed top-0 right-0 h-full w-full md:w-[600px] bg-black border-l border-primary/20 z-50 shadow-[0_0_50px_rgba(0,240,255,0.1)] flex flex-col"
             >
                 {/* Fixed Header */}
-                <div className="bg-black/90 backdrop-blur-md border-b border-white/10 p-6 flex items-center justify-between z-10 flex-none">
+                <div className="bg-black/90 backdrop-blur-md border-b border-white/10 p-4 md:p-6 flex items-center justify-between z-10 flex-none">
                     <div className="flex items-center gap-4">
                         <div className="p-2 bg-primary/10 rounded border border-primary/30 text-primary">
                             {project.icon}
@@ -160,7 +160,7 @@ const SidePanel = ({ project, onClose }) => {
                 </div>
 
                 {/* Scrollable Content */}
-                <div className="flex-1 overflow-y-auto p-8 space-y-8" data-lenis-prevent>
+                <div className="flex-1 overflow-y-auto p-4 md:p-8 space-y-6 md:space-y-8" data-lenis-prevent>
                     <div>
                         <h3 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
                             <Terminal className="w-4 h-4 text-primary" /> MISSION BRIEF
@@ -180,7 +180,7 @@ const SidePanel = ({ project, onClose }) => {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-4">
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                         {project.stats.map((stat, i) => (
                             <div key={i} className="bg-white/5 p-4 rounded border border-white/5 hover:border-primary/30 transition-colors group">
                                 <div className="text-[10px] text-gray-500 mb-1 font-mono group-hover:text-primary transition-colors">{stat.label}</div>
