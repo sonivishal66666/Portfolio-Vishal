@@ -5,7 +5,7 @@ import * as random from 'maath/random/dist/maath-random.esm';
 
 const GlobePoints = (props) => {
     const ref = useRef();
-    const sphere = useMemo(() => random.inSphere(new Float32Array(3000), { radius: 1.2 }), []);
+    const sphere = useMemo(() => random.inSphere(new Float32Array(1500), { radius: 1.2 }), []);
 
     useFrame((state, delta) => {
         ref.current.rotation.y += delta / 10;
@@ -29,7 +29,7 @@ const GlobePoints = (props) => {
 const Globe3D = () => {
     return (
         <div className="absolute inset-0 z-0 opacity-50 pointer-events-none">
-            <Canvas camera={{ position: [0, 0, 2.5] }} dpr={[1, 2]}>
+            <Canvas camera={{ position: [0, 0, 2.5] }} dpr={[1, 1.5]}>
                 <GlobePoints />
             </Canvas>
         </div>
