@@ -166,7 +166,7 @@ const Contact = () => {
                         <span>GLOBAL_CONNECTIVITY_HUB</span>
                     </motion.div>
 
-                    <h2 className="text-5xl md:text-7xl font-bold font-display mb-6">
+                    <h2 className="text-3xl md:text-7xl font-bold font-display mb-6">
                         <HackerText text="INITIATE_UPLINK" />
                     </h2>
 
@@ -197,7 +197,7 @@ const Contact = () => {
                                     </div>
                                     <div className="text-center md:text-left">
                                         <div className="text-sm font-mono text-gray-400 uppercase tracking-wider mb-1">Primary Communication Channel</div>
-                                        <div className="text-2xl md:text-3xl font-bold text-white font-display">vishalsoni6350@gmail.com</div>
+                                        <div className="text-2xl md:text-3xl font-bold text-white font-display break-all">vishalsoni6350@gmail.com</div>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3">

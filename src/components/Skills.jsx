@@ -213,7 +213,7 @@ const Skills = () => {
                         <Cpu className="w-4 h-4" />
                         <span>SYSTEM_CAPABILITIES</span>
                     </div>
-                    <h2 className="text-4xl md:text-6xl font-bold font-display mb-6">
+                    <h2 className="text-3xl md:text-6xl font-bold font-display mb-6">
                         <HackerText text="INSTALLED_MODULES" />
                     </h2>
                     <div className="h-1 w-24 bg-primary rounded-full" />

@@ -372,7 +372,7 @@ const Projects = () => {
                         <Zap className="w-3 h-3 animate-pulse" />
                         <span>SYSTEM_OVERRIDE_ENGAGED</span>
                     </div>
-                    <h2 className="text-5xl md:text-7xl font-bold font-display mb-6 tracking-tight">
+                    <h2 className="text-3xl md:text-7xl font-bold font-display mb-6 tracking-tight">
                         <HackerText text="PROJECT_ARCHIVE" />
                     </h2>
                     <p className="text-gray-400 max-w-xl mx-auto text-lg font-mono">

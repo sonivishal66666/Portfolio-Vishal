@@ -265,11 +265,12 @@ const Hero = () => {
 
                     {/* Proof Strip */}
                     <div className="mb-12 border-t border-white/10 pt-6">
-                        <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs md:text-sm font-mono text-gray-500">
-                            <div className="flex items-center gap-2">
+                        <div className="flex flex-wrap justify-center lg:justify-start gap-x-4 gap-y-2 text-xs md:text-sm font-mono text-gray-500">
+                            <div className="flex flex-wrap justify-center lg:justify-start gap-2">
                                 <span className="text-primary">AWS</span> • <span>Terraform</span> • <span>Kubernetes</span> • <span>Docker</span> • <span>CI/CD</span>
                             </div>
-                            <div className="flex items-center gap-2 text-gray-600">
+                            <div className="hidden md:inline text-gray-600">•</div>
+                            <div className="flex flex-wrap justify-center lg:justify-start gap-2 text-gray-600">
                                 <span>Production deployments</span> • <span>Serverless + Containers</span>
                             </div>
                         </div>
