@@ -87,47 +87,62 @@ const ContactCard = ({ icon: Icon, label, value, href, action, color = "primary"
 };
 
 const Contact = () => {
+    const [isMobile, setIsMobile] = useState(false);
+
+    React.useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
     return (
         <section className="py-24 relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-black perspective-1000">
-            {/* Digital Horizon Background */}
+            {/* Digital Horizon Background - Static on Mobile */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                {/* Moving Grid Floor */}
-                <div
-                    className="absolute inset-[-100%] opacity-30"
-                    style={{
-                        backgroundImage: `
-                            linear-gradient(transparent 0%, #00f0ff 2px, transparent 3px),
-                            linear-gradient(90deg, transparent 0%, #00f0ff 2px, transparent 3px)
-                        `,
-                        backgroundSize: '100px 100px',
-                        transform: 'perspective(500px) rotateX(60deg)',
-                        transformOrigin: 'center top',
-                        animation: 'grid-move 20s linear infinite'
-                    }}
-                />
+                {isMobile ? (
+                    <div className="absolute inset-0 bg-gradient-to-b from-black via-[#050505] to-black" />
+                ) : (
+                    <>
+                        {/* Moving Grid Floor */}
+                        <div
+                            className="absolute inset-[-100%] opacity-30"
+                            style={{
+                                backgroundImage: `
+                                    linear-gradient(transparent 0%, #00f0ff 2px, transparent 3px),
+                                    linear-gradient(90deg, transparent 0%, #00f0ff 2px, transparent 3px)
+                                `,
+                                backgroundSize: '100px 100px',
+                                transform: 'perspective(500px) rotateX(60deg)',
+                                transformOrigin: 'center top',
+                                animation: 'grid-move 20s linear infinite'
+                            }}
+                        />
 
-                {/* Horizon Glow */}
-                <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-primary/20 via-transparent to-transparent opacity-50 blur-3xl" />
-                <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black via-black to-transparent" />
+                        {/* Horizon Glow */}
+                        <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-primary/20 via-transparent to-transparent opacity-50 blur-3xl" />
+                        <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black via-black to-transparent" />
 
-                {/* Floating Particles */}
-                {[...Array(20)].map((_, i) => (
-                    <motion.div
-                        key={i}
-                        initial={{ opacity: 0, y: Math.random() * 1000 }}
-                        animate={{
-                            opacity: [0, 0.5, 0],
-                            y: [Math.random() * 1000, Math.random() * -1000]
-                        }}
-                        transition={{
-                            duration: Math.random() * 10 + 10,
-                            repeat: Infinity,
-                            ease: "linear"
-                        }}
-                        className="absolute w-1 h-1 bg-primary rounded-full"
-                        style={{ left: `${Math.random() * 100}%` }}
-                    />
-                ))}
+                        {/* Floating Particles */}
+                        {[...Array(20)].map((_, i) => (
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, y: Math.random() * 1000 }}
+                                animate={{
+                                    opacity: [0, 0.5, 0],
+                                    y: [Math.random() * 1000, Math.random() * -1000]
+                                }}
+                                transition={{
+                                    duration: Math.random() * 10 + 10,
+                                    repeat: Infinity,
+                                    ease: "linear"
+                                }}
+                                className="absolute w-1 h-1 bg-primary rounded-full"
+                                style={{ left: `${Math.random() * 100}%` }}
+                            />
+                        ))}
+                    </>
+                )}
             </div>
 
             <style>{`

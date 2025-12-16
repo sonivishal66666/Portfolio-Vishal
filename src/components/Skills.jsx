@@ -148,46 +148,61 @@ const Skills = () => {
         { title: "Advanced Kubernetes", issuer: "Udemy" }
     ];
 
+    const [isMobile, setIsMobile] = useState(false);
+
+    React.useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
     return (
         <section
-            onMouseMove={handleMouseMove}
+            onMouseMove={isMobile ? undefined : handleMouseMove}
             className="py-24 relative overflow-hidden min-h-screen flex flex-col justify-center bg-black"
         >
-            {/* Hex-Hive Background */}
+            {/* Hex-Hive Background - Static on Mobile */}
             <div className="absolute inset-0 pointer-events-none">
-                {/* Base Hex Grid */}
-                <div
-                    className="absolute inset-0 opacity-[0.03]"
-                    style={{
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l25.98 15v30L30 60 4.02 45V15z' fill-opacity='0' stroke='%23ffffff' stroke-width='1'/%3E%3C/svg%3E")`,
-                        backgroundSize: '60px 60px'
-                    }}
-                />
+                {isMobile ? (
+                    <div className="absolute inset-0 bg-gradient-to-b from-black via-[#050505] to-black" />
+                ) : (
+                    <>
+                        {/* Base Hex Grid */}
+                        <div
+                            className="absolute inset-0 opacity-[0.03]"
+                            style={{
+                                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l25.98 15v30L30 60 4.02 45V15z' fill-opacity='0' stroke='%23ffffff' stroke-width='1'/%3E%3C/svg%3E")`,
+                                backgroundSize: '60px 60px'
+                            }}
+                        />
 
-                {/* Interactive Glow (Flashlight) */}
-                <div
-                    className="absolute inset-0 transition-opacity duration-300"
-                    style={{
-                        background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(0, 240, 255, 0.1), transparent 40%)`
-                    }}
-                />
+                        {/* Interactive Glow (Flashlight) */}
+                        <div
+                            className="absolute inset-0 transition-opacity duration-300"
+                            style={{
+                                background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(0, 240, 255, 0.1), transparent 40%)`
+                            }}
+                        />
 
-                {/* Random Pulsing Hexagons (Simulated) */}
-                <motion.div
-                    animate={{ opacity: [0, 0.5, 0] }}
-                    transition={{ duration: 4, repeat: Infinity, repeatDelay: 2 }}
-                    className="absolute top-1/4 left-1/4 w-16 h-16 bg-primary/20 clip-path-hexagon blur-xl"
-                />
-                <motion.div
-                    animate={{ opacity: [0, 0.3, 0] }}
-                    transition={{ duration: 5, repeat: Infinity, repeatDelay: 3 }}
-                    className="absolute bottom-1/3 right-1/4 w-24 h-24 bg-secondary/20 clip-path-hexagon blur-xl"
-                />
-                <motion.div
-                    animate={{ opacity: [0, 0.4, 0] }}
-                    transition={{ duration: 3, repeat: Infinity, repeatDelay: 5 }}
-                    className="absolute top-1/2 right-1/3 w-12 h-12 bg-white/10 clip-path-hexagon blur-lg"
-                />
+                        {/* Random Pulsing Hexagons (Simulated) */}
+                        <motion.div
+                            animate={{ opacity: [0, 0.5, 0] }}
+                            transition={{ duration: 4, repeat: Infinity, repeatDelay: 2 }}
+                            className="absolute top-1/4 left-1/4 w-16 h-16 bg-primary/20 clip-path-hexagon blur-xl"
+                        />
+                        <motion.div
+                            animate={{ opacity: [0, 0.3, 0] }}
+                            transition={{ duration: 5, repeat: Infinity, repeatDelay: 3 }}
+                            className="absolute bottom-1/3 right-1/4 w-24 h-24 bg-secondary/20 clip-path-hexagon blur-xl"
+                        />
+                        <motion.div
+                            animate={{ opacity: [0, 0.4, 0] }}
+                            transition={{ duration: 3, repeat: Infinity, repeatDelay: 5 }}
+                            className="absolute top-1/2 right-1/3 w-12 h-12 bg-white/10 clip-path-hexagon blur-lg"
+                        />
+                    </>
+                )}
             </div>
 
             <div className="max-w-7xl mx-auto px-6 w-full relative z-10">

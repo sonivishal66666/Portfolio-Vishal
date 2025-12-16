@@ -226,7 +226,7 @@ const Hero = () => {
                     initial={{ opacity: 0, x: -50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8 }}
-                    className="pointer-events-auto"
+                    className="pointer-events-auto flex flex-col items-center text-center lg:items-start lg:text-left"
                 >
                     <div className="flex items-center gap-2 mb-6">
                         <div className="px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-mono tracking-widest flex items-center gap-2">
