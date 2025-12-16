@@ -27,6 +27,17 @@ const GlobePoints = (props) => {
 };
 
 const Globe3D = () => {
+    const [isMobile, setIsMobile] = React.useState(false);
+
+    React.useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    if (isMobile) return null;
+
     return (
         <div className="absolute inset-0 z-0 opacity-50 pointer-events-none">
             <Canvas camera={{ position: [0, 0, 2.5] }} dpr={[1, 1.5]}>

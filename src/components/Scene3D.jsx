@@ -72,6 +72,23 @@ const DataStream = () => {
 };
 
 const Scene3D = () => {
+    const [isMobile, setIsMobile] = React.useState(false);
+
+    React.useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    if (isMobile) {
+        return (
+            <div className="absolute inset-0 z-0 pointer-events-none bg-gradient-to-b from-black via-[#050505] to-black">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,240,255,0.1),transparent_70%)]" />
+            </div>
+        );
+    }
+
     return (
         <div className="absolute inset-0 z-0 pointer-events-none">
             <Canvas camera={{ position: [0, 0, 2] }} dpr={[1, 1.5]} performance={{ min: 0.5 }}>
