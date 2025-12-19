@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { Server, Database, Globe, Shield, Zap, ExternalLink, Github, Terminal, X, ChevronRight, Layers, Cloud, Lock, Cpu } from 'lucide-react';
-import HackerText from './HackerText';
+import { Server, Database, Globe, Shield, Zap, ExternalLink, Github, Terminal, X, ChevronRight, Layers, Cloud, Lock, Cpu, Crown } from 'lucide-react';
 
 const ProjectCard = ({ project, onClick, index }) => {
     const ref = useRef(null);
@@ -47,14 +47,14 @@ const ProjectCard = ({ project, onClick, index }) => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
             viewport={{ once: true }}
-            className="relative w-full max-w-sm md:w-[350px] h-[480px] rounded-xl bg-black/40 border border-white/10 cursor-pointer group perspective-1000"
+            className={`relative w-full ${project.isFlagship ? 'md:w-[800px] md:min-h-[500px]' : 'max-w-sm md:w-[350px] h-[480px]'} rounded-xl bg-black/40 border ${project.isFlagship ? 'border-yellow-500/30' : 'border-white/10'} cursor-pointer group perspective-1000`}
         >
             {/* Neon Glow */}
             <div
                 style={{
                     transform: "translateZ(75px)",
                 }}
-                className="absolute inset-0 rounded-xl bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
+                className={`absolute inset-0 rounded-xl ${project.isFlagship ? 'bg-yellow-500/10' : 'bg-primary/5'} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl`}
             />
 
             {/* Card Content */}
@@ -62,17 +62,23 @@ const ProjectCard = ({ project, onClick, index }) => {
                 style={{
                     transform: "translateZ(50px)",
                 }}
-                className="absolute inset-0 rounded-xl bg-black/80 backdrop-blur-md border border-white/10 overflow-hidden flex flex-col p-6 shadow-2xl group-hover:border-primary/50 transition-colors duration-300"
+                className={`absolute inset-0 rounded-xl bg-black/80 backdrop-blur-md border ${project.isFlagship ? 'border-yellow-500/30 group-hover:border-yellow-500/50' : 'border-white/10 group-hover:border-primary/50'} overflow-hidden flex flex-col p-6 shadow-2xl transition-colors duration-300`}
             >
+                {/* Flagship Badge */}
+                {project.isFlagship && (
+                    <div className="absolute top-0 right-0 px-4 py-1 bg-yellow-500/20 text-yellow-500 text-[10px] font-bold tracking-widest border-l border-b border-yellow-500/30 rounded-bl-xl flex items-center gap-2">
+                        <Crown className="w-3 h-3" /> FLAGSHIP PROJECT
+                    </div>
+                )}
+
                 {/* Header */}
                 <div className="flex justify-between items-start mb-6">
-                    <div className="p-3 rounded-lg bg-white/5 border border-white/10 group-hover:border-primary/50 transition-colors shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+                    <div className={`p-3 rounded-lg bg-white/5 border ${project.isFlagship ? 'border-yellow-500/30' : 'border-white/10'} transition-colors shadow-[0_0_15px_rgba(0,0,0,0.5)]`}>
                         {project.icon}
                     </div>
                     <div className="flex flex-col items-end gap-2">
                         <div className="flex items-center gap-2">
                             <span className="text-[10px] font-mono text-primary animate-pulse">● LIVE</span>
-                            {/* Source Code Button on Card */}
                             <a
                                 href={project.githubUrl}
                                 target="_blank"
@@ -88,34 +94,53 @@ const ProjectCard = ({ project, onClick, index }) => {
                     </div>
                 </div>
 
-                {/* Title & Desc */}
-                <div className="mb-auto">
-                    <h3 className="text-2xl font-bold font-display text-white mb-2 group-hover:text-primary transition-colors">
-                        <HackerText text={project.title} speed={50} />
-                    </h3>
-                    <p className="text-sm text-gray-400 font-mono leading-relaxed line-clamp-3 mb-3">
-                        {project.shortDesc}
-                    </p>
-                    {/* Infra Line */}
-                    <div className="flex items-start gap-2 text-[10px] text-primary/80 font-mono bg-primary/5 p-2 rounded border border-primary/10">
-                        <Cloud className="w-3 h-3 mt-0.5 shrink-0" />
-                        <span>{project.infra}</span>
+                <div className={project.isFlagship ? "flex flex-col md:flex-row gap-8 h-full" : "flex flex-col h-full"}>
+                    {/* Title & Desc */}
+                    <div className="mb-auto flex-1">
+                        <h3 className={`font-bold font-display text-white mb-2 transition-colors ${project.isFlagship ? 'text-4xl group-hover:text-yellow-500' : 'text-2xl group-hover:text-primary'}`}>
+                            <h3 className={`font-bold font-display text-white mb-2 transition-colors ${project.isFlagship ? 'text-4xl group-hover:text-yellow-500' : 'text-2xl group-hover:text-primary'}`}>
+                                {project.title}
+                            </h3>
+                        </h3>
+                        <p className={`text-gray-400 font-mono leading-relaxed mb-3 ${project.isFlagship ? 'text-base line-clamp-none' : 'text-sm line-clamp-3'}`}>
+                            {project.shortDesc}
+                        </p>
+                        {/* Infra Line */}
+                        <div className={`flex items-start gap-2 text-[10px] font-mono bg-primary/5 p-2 rounded border border-primary/10 ${project.isFlagship ? 'text-yellow-500/80' : 'text-primary/80'}`}>
+                            <Cloud className="w-3 h-3 mt-0.5 shrink-0" />
+                            <span>{project.infra}</span>
+                        </div>
                     </div>
-                </div>
 
-                {/* Tech Stack */}
-                <div className="space-y-4 mt-4">
-                    <div className="h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-                    <div className="flex flex-wrap gap-2">
-                        {project.tech.slice(0, 3).map((t, i) => (
-                            <span key={i} className="text-[10px] px-2 py-1 rounded bg-white/5 text-gray-300 border border-white/5 group-hover:border-primary/30 transition-colors">
-                                {t}
-                            </span>
-                        ))}
-                    </div>
-                    <div className="flex items-center justify-between text-xs font-mono text-gray-500 group-hover:text-primary transition-colors">
-                        <span>ACCESS_TERMINAL</span>
-                        <ChevronRight className="w-4 h-4" />
+                    {/* Tech Stack (Expanded for Flagship) */}
+                    <div className={`${project.isFlagship ? 'w-full md:w-64 border-l border-white/10 pl-0 md:pl-8 flex flex-col justify-center' : 'space-y-4 mt-4 w-full'}`}>
+                        {!project.isFlagship && <div className="h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />}
+
+                        <div className="flex flex-wrap gap-2">
+                            {project.tech.slice(0, project.isFlagship ? 8 : 3).map((t, i) => (
+                                <span key={i} className={`text-[10px] px-2 py-1 rounded bg-white/5 text-gray-300 border border-white/5 transition-colors ${project.isFlagship ? 'group-hover:border-yellow-500/30' : 'group-hover:border-primary/30'}`}>
+                                    {t}
+                                </span>
+                            ))}
+                        </div>
+
+                        {project.isFlagship && (
+                            <div className="mt-6 space-y-2">
+                                <div className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">PLATFORM CAPABILITIES</div>
+                                <div className="grid grid-cols-2 gap-2">
+                                    {project.stats.slice(0, 4).map((stat, i) => (
+                                        <div key={i} className="text-xs text-gray-400">
+                                            <span className="text-yellow-500">•</span> {stat.value}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        <div className={`flex items-center justify-between text-xs font-mono text-gray-500 transition-colors ${project.isFlagship ? 'mt-auto pt-4 group-hover:text-yellow-500' : 'group-hover:text-primary mt-4'}`}>
+                            <span>VIEW_DIAGNOSTICS</span>
+                            <ChevronRight className="w-4 h-4" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -123,25 +148,26 @@ const ProjectCard = ({ project, onClick, index }) => {
     );
 };
 
-const SidePanel = ({ project, onClose }) => {
-    return (
+const SidePanel = ({ project, onClose, isMobile }) => {
+    return createPortal(
         <>
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={onClose}
-                className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40"
+                className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9998]"
             />
             <motion.div
-                initial={{ x: '100%' }}
-                animate={{ x: 0 }}
-                exit={{ x: '100%' }}
+                initial={{ x: '100%', y: isMobile ? 0 : '-50%' }}
+                animate={{ x: 0, y: isMobile ? 0 : '-50%' }}
+                exit={{ x: '100%', y: isMobile ? 0 : '-50%' }}
+                style={{ top: isMobile ? 0 : '50%' }}
                 transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                className="fixed top-0 right-0 h-full w-full md:w-[600px] bg-black border-l border-primary/20 z-50 shadow-[0_0_50px_rgba(0,240,255,0.1)] flex flex-col"
+                className="fixed right-0 h-full md:h-auto md:max-h-[90vh] w-full md:w-[600px] bg-black border-l border-y border-primary/20 z-[9999] flex flex-col md:rounded-l-xl shadow-2xl"
             >
                 {/* Fixed Header */}
-                <div className="bg-black/90 backdrop-blur-md border-b border-white/10 p-4 md:p-6 flex items-center justify-between z-10 flex-none">
+                <div className="bg-black/90 backdrop-blur-md border-b border-white/10 p-4 md:p-6 flex items-center justify-between z-10 flex-none md:rounded-tl-xl">
                     <div className="flex items-center gap-4">
                         <div className="p-2 bg-primary/10 rounded border border-primary/30 text-primary">
                             {project.icon}
@@ -188,6 +214,27 @@ const SidePanel = ({ project, onClose }) => {
                             </div>
                         ))}
                     </div>
+                    {project.metricsDisclaimer && (
+                        <p className="text-[10px] text-gray-500 font-mono mt-2 italic border-l-2 border-primary/30 pl-3">
+                            {project.metricsDisclaimer}
+                        </p>
+                    )}
+
+                    {project.validationSteps && (
+                        <div>
+                            <h3 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
+                                <Zap className="w-4 h-4 text-red-400" /> FAILURE VALIDATION (CHAOS TESTING)
+                            </h3>
+                            <div className="bg-red-500/5 border border-red-500/20 rounded p-4 space-y-2">
+                                {project.validationSteps.map((step, i) => (
+                                    <div key={i} className="flex items-center gap-2 text-xs font-mono text-gray-300">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0" />
+                                        {step}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
 
                     <div>
                         <h3 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
@@ -215,25 +262,23 @@ const SidePanel = ({ project, onClose }) => {
                             ))}
                         </ul>
                     </div>
-                </div>
 
-                {/* Fixed Footer */}
-                <div className="p-6 border-t border-white/10 bg-black z-10 flex-none flex gap-4">
-                    <button className="flex-1 py-4 bg-primary text-black font-bold text-sm tracking-widest hover:bg-white transition-colors flex items-center justify-center gap-2 rounded relative overflow-hidden group">
-                        <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                        <ExternalLink className="w-4 h-4 relative z-10" /> <span className="relative z-10">INITIATE DEMO</span>
-                    </button>
-                    <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 py-4 border border-white/10 text-white font-mono text-sm tracking-widest hover:bg-white/5 transition-colors flex items-center justify-center gap-2 rounded"
-                    >
-                        <Github className="w-4 h-4" /> ACCESS SOURCE
-                    </a>
+                    {/* Inline Footer Action */}
+                    <div className="pt-6 border-t border-white/10">
+                        <a
+                            href={project.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-full py-4 bg-white/5 border border-white/10 text-white font-mono text-sm tracking-widest hover:bg-primary hover:text-black hover:border-primary transition-all duration-300 flex items-center justify-center gap-2 rounded group"
+                        >
+                            <Github className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                            <span>ACCESS SOURCE_CODE</span>
+                        </a>
+                    </div>
                 </div>
             </motion.div>
-        </>
+        </>,
+        document.body
     );
 };
 
@@ -241,6 +286,58 @@ const Projects = () => {
     const [selectedProject, setSelectedProject] = useState(null);
 
     const projects = [
+        {
+            id: "PRJ-000",
+            title: "Failure-Resilient Infrastructure Platform",
+            shortDesc: "A self-healing Kubernetes platform engineered to tolerate failure, scale under load, and deploy with zero downtime.",
+            infra: "Auto-Scaling EKS Cluster + CI/CD",
+            icon: <Crown className="w-8 h-8 text-yellow-500" />,
+            description: "Built a highly available, self-healing cloud platform designed to recover automatically from pod crashes, node failures, and traffic spikes without manual intervention.",
+            metricsDisclaimer: "Metrics derived from Kubernetes health checks, rolling deployments, and autoscaling behavior under synthetic load.",
+            engineeringNotes: "Focus on failure recovery over happy-path deployments. Implemented zero-downtime CI/CD with OIDC keyless authentication. Solved ImagePullBackOff issues and 503 ingress errors through rigorous stress testing.",
+            githubUrl: "https://github.com/sonivishal66666/Production-Grade-Cloud-Platform",
+            tech: ["AWS EKS", "Terraform", "Kubernetes", "GitHub Actions", "Prometheus", "Grafana", "Docker", "Ansible"],
+            isFlagship: true,
+            stats: [
+                { label: "SCALING", value: "HPA / Auto" },
+                { label: "STRATEGY", value: "Rolling Update" },
+                { label: "RESILIENCE", value: "Self-Healing" },
+                { label: "SECURITY", value: "OIDC / Keyless" }
+            ],
+            validationSteps: [
+                "Pod deletion → Auto restart verification",
+                "Node termination → Rescheduled pods on healthy nodes",
+                "Load spike → HPA scale-out triggers"
+            ],
+            protocols: [
+                "Provisions AWS infrastructure using reusable Terraform modules",
+                "Deploys frontend & backend services on AWS EKS",
+                "Enables auto-scaling and self-healing via Kubernetes HPA",
+                "Implements zero-downtime CI/CD with GitHub Actions + OIDC"
+            ]
+        },
+        {
+            id: "PRJ-001-A",
+            title: "Terraform Infrastructure Foundation",
+            shortDesc: "Reusable Infrastructure Foundation. Creates custom VPC, secure networking, and OS-aware EC2 bootstrapping.",
+            infra: "VPC, Security Groups, EC2 Bootstrap",
+            icon: <Server className="w-8 h-8 text-blue-400" />,
+            description: "Designed and automated a production-style AWS infrastructure using Terraform, focusing on reproducibility, clean network design, and safe infrastructure lifecycle management. Built as a reusable foundation layer for larger cloud platforms.",
+            engineeringNotes: "Enable safe destroy-and-recreate workflows to prevent configuration drift. Custom VPC design ensures network isolation for sensitive resources.",
+            githubUrl: "https://github.com/sonivishal66666/AWS-Terraform-Infrastructure-Automation",
+            tech: ["AWS", "Terraform", "EC2", "VPC", "Nginx"],
+            stats: [
+                { label: "TYPE", value: "IaC" },
+                { label: "DRIFT", value: "Zero" },
+                { label: "MODULES", value: "Yes" }
+            ],
+            protocols: [
+                "Provisions AWS infrastructure using Infrastructure as Code",
+                "Creates a custom VPC with public subnet and route tables",
+                "Bootstraps EC2 instances automatically using OS-aware user data",
+                "Security Groups with controlled ingress/egress"
+            ]
+        },
         {
             id: "PRJ-001",
             title: "Arvis Ticketing",
@@ -373,7 +470,9 @@ const Projects = () => {
                         <span>SYSTEM_OVERRIDE_ENGAGED</span>
                     </div>
                     <h2 className="text-3xl md:text-7xl font-bold font-display mb-6 tracking-tight">
-                        <HackerText text="PROJECT_ARCHIVE" />
+                        <h2 className="text-3xl md:text-7xl font-bold font-display mb-6 tracking-tight">
+                            PROJECT_ARCHIVE
+                        </h2>
                     </h2>
                     <p className="text-gray-400 max-w-xl mx-auto text-lg font-mono">
                         Advanced infrastructure deployments and security protocols.
@@ -399,6 +498,7 @@ const Projects = () => {
                     <SidePanel
                         project={selectedProject}
                         onClose={() => setSelectedProject(null)}
+                        isMobile={isMobile}
                     />
                 )}
             </AnimatePresence>
