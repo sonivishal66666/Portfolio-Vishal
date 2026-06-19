@@ -294,7 +294,7 @@ const SidePanel = ({ project, onClose, isMobile }) => {
                                 href={project.liveUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex-1 py-4 bg-primary text-black font-mono text-sm tracking-widest hover:bg-white hover:text-black hover:border-white transition-all duration-300 flex items-center justify-center gap-2 rounded group"
+                                className="flex-1 py-4 bg-primary/10 border border-primary/30 text-primary font-mono text-sm tracking-widest hover:bg-primary hover:text-black hover:border-primary transition-all duration-300 flex items-center justify-center gap-2 rounded group"
                             >
                                 <ExternalLink className="w-4 h-4 group-hover:scale-110 transition-transform" />
                                 <span>ACCESS LIVE_SYSTEM</span>
