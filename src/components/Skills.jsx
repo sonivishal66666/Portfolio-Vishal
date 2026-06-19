@@ -85,7 +85,7 @@ const CertCard = ({ cert, index }) => (
 );
 
 const Skills = () => {
-    const [activeCategory, setActiveCategory] = useState('devops'); // Default to DevOps
+    const [activeCategory, setActiveCategory] = useState('languages'); // Default to Languages
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
     const handleMouseMove = (e) => {
@@ -93,49 +93,64 @@ const Skills = () => {
         setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
     };
 
-    // Reordered Categories: DevOps -> Cloud -> Languages -> Frameworks
     const categories = {
-        devops: {
-            icon: <Terminal className="w-4 h-4" />,
-            label: "DEVOPS",
+        languages: {
+            icon: <Code className="w-4 h-4" />,
+            label: "LANGUAGES",
             skills: [
-                { name: "Docker", capability: "Containerization & Multi-stage Builds" },
-                { name: "Kubernetes", capability: "Cluster Orchestration & Helm" },
-                { name: "Jenkins", capability: "Pipeline as Code (Groovy)" },
-                { name: "Terraform", capability: "Infrastructure as Code (IaC)" },
-                { name: "GitHub Actions", capability: "CI/CD Automation" }
+                { name: "Go", capability: "Concurrency / Fiber / Systems" },
+                { name: "Python", capability: "Automation / Scripting / ML / FastAPI" },
+                { name: "C++", capability: "Data Structures & Algorithms" },
+                { name: "Java", capability: "Object-Oriented Programming" },
+                { name: "TypeScript/JS", capability: "Vite / Next.js / React 19" },
+                { name: "PHP", capability: "Legacy Scripting & Applications", type: "academic" },
+                { name: "SQL", capability: "Relational Queries & Optimization" }
+            ]
+        },
+        backend: {
+            icon: <Database className="w-4 h-4" />,
+            label: "BACKEND_SYSTEMS",
+            skills: [
+                { name: "REST APIs", capability: "Endpoint Design & Routing" },
+                { name: "WebSockets", capability: "Real-time Messaging Hubs" },
+                { name: "OT Engine", capability: "Operational Transform Sync" },
+                { name: "Serverless", capability: "AWS Lambda & Cloud Functions" },
+                { name: "PostgreSQL", capability: "PgBouncer & Schema Design" },
+                { name: "MySQL", capability: "Relational Transactions" },
+                { name: "DynamoDB", capability: "Low-Latency Key-Value" },
+                { name: "Redis", capability: "Mutex Locking & Pub/Sub Caching" }
             ]
         },
         cloud: {
             icon: <Globe className="w-4 h-4" />,
             label: "CLOUD_INFRA",
             skills: [
-                { name: "AWS Lambda", capability: "Serverless Functions" },
-                { name: "Amazon RDS", capability: "Managed Database Operations" },
-                { name: "Amazon S3", capability: "Object Storage & Lifecycle" },
-                { name: "Cloud Run", capability: "Container Deployment" },
-                { name: "Firebase", capability: "Realtime DB & Auth" }
+                { name: "AWS", capability: "Lambda, EC2, EKS, RDS, S3, ALB, IAM" },
+                { name: "GCP", capability: "Cloud Run & Firebase Platform" },
+                { name: "Kubernetes", capability: "Cluster Orchestration & Scaling" },
+                { name: "Terraform", capability: "Declarative Infrastructure as Code" }
             ]
         },
-        languages: {
-            icon: <Code className="w-4 h-4" />,
-            label: "LANGUAGES",
+        devops: {
+            icon: <Terminal className="w-4 h-4" />,
+            label: "DEVOPS_OBSERVABILITY",
             skills: [
-                { name: "Python", capability: "Automation / Scripting / Tooling" },
-                { name: "JavaScript", capability: "Frontend + CI Tooling" },
-                { name: "SQL", capability: "Query Design / Optimization" },
-                { name: "Java", capability: "Academic / Object-Oriented", type: "academic" },
-                { name: "C++", capability: "Systems-Level / Academic", type: "academic" },
-                { name: "PHP", capability: "Legacy Support / Academic", type: "academic" }
+                { name: "Docker", capability: "Multi-Stage Image Bundles" },
+                { name: "GitHub Actions", capability: "Continuous Integration Pipelines" },
+                { name: "Jenkins", capability: "Pipeline-as-Code Orchestration" },
+                { name: "Prometheus", capability: "Metrics Pulling & Instrumentation" },
+                { name: "Grafana", capability: "System Dashboards & Alerting" }
             ]
         },
-        frameworks: {
-            icon: <Database className="w-4 h-4" />,
-            label: "FRAMEWORKS",
+        tools: {
+            icon: <Cpu className="w-4 h-4" />,
+            label: "TOOLS_OS",
             skills: [
-                { name: "React", capability: "Component-Based UI" },
-                { name: "ArgoCD", capability: "GitOps Deployment" },
-                { name: "JUnit", capability: "Unit Testing" }
+                { name: "Linux", capability: "Bash Scripting & Administration" },
+                { name: "Git", capability: "Version Control & Branching" },
+                { name: "IPFS", capability: "Decentralized Chunk Storage" },
+                { name: "KiCad/eSim", capability: "EDA Porting & Schematics" },
+                { name: "LLVM", capability: "Compiler Toolchains & Assembly" }
             ]
         }
     };

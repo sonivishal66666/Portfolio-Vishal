@@ -288,117 +288,147 @@ const Projects = () => {
     const projects = [
         {
             id: "PRJ-000",
-            title: "Failure-Resilient Infrastructure Platform",
-            shortDesc: "A self-healing Kubernetes platform engineered to tolerate failure, scale under load, and deploy with zero downtime.",
-            infra: "Auto-Scaling EKS Cluster + CI/CD",
+            title: "CollabCode",
+            shortDesc: "A production-grade realtime collaborative coding and technical interview platform featuring WebRTC voice/video, whiteboard, and sandboxed execution.",
+            infra: "Decoupled Go backend on Railway + Next.js frontend on Vercel with Supabase PgBouncer setup.",
             icon: <Crown className="w-8 h-8 text-yellow-500" />,
-            description: "Built a highly available, self-healing cloud platform designed to recover automatically from pod crashes, node failures, and traffic spikes without manual intervention.",
-            metricsDisclaimer: "Metrics derived from Kubernetes health checks, rolling deployments, and autoscaling behavior under synthetic load.",
-            engineeringNotes: "Focus on failure recovery over happy-path deployments. Implemented zero-downtime CI/CD with OIDC keyless authentication. Solved ImagePullBackOff issues and 503 ingress errors through rigorous stress testing.",
-            githubUrl: "https://github.com/sonivishal66666/Production-Grade-Cloud-Platform",
-            tech: ["AWS EKS", "Terraform", "Kubernetes", "GitHub Actions", "Prometheus", "Grafana", "Docker", "Ansible"],
+            description: "Engineered a low-latency collaborative coding platform with a custom Operational Transform (OT) engine to resolve concurrent edit conflicts. Integrated WebRTC for voice/video with live Web Audio API avatar borders, a glassmorphic collaborative whiteboard, a Monaco-based diffing 'Time Machine', and multi-file code compilation.",
+            metricsDisclaimer: "Performance optimized using decoupled containerized stateful WebSocket servers to bypass Vercel serverless limitations.",
+            engineeringNotes: "Bypassed Vercel Serverless WebSocket limits by containerizing a stateful Go service on Railway. Solved Supabase connection pooler (PgBouncer) prepared-statement limitations by programmatically configuring simple protocol queries in pgx.",
+            githubUrl: "https://github.com/sonivishal66666/CollabCode",
+            tech: ["Next.js", "TypeScript", "Go", "WebSocket", "PostgreSQL", "WebRTC", "Docker", "Zustand", "Redis", "Supabase"],
             isFlagship: true,
             stats: [
-                { label: "SCALING", value: "HPA / Auto" },
-                { label: "STRATEGY", value: "Rolling Update" },
-                { label: "RESILIENCE", value: "Self-Healing" },
-                { label: "SECURITY", value: "OIDC / Keyless" }
+                { label: "COLLABORATION", value: "Realtime OT" },
+                { label: "NETWORKING", value: "WebSockets" },
+                { label: "INFRASTRUCTURE", value: "Railway / Docker" },
+                { label: "DATABASE", value: "Simple Protocol" }
             ],
             validationSteps: [
-                "Pod deletion → Auto restart verification",
-                "Node termination → Rescheduled pods on healthy nodes",
-                "Load spike → HPA scale-out triggers"
+                "WebSocket upgrade bypass -> Verification of persistent sessions",
+                "Prepared statements bypass -> PgBouncer connection integrity check",
+                "Concurrency stress -> Operational Transform resolution verification"
             ],
             protocols: [
-                "Provisions AWS infrastructure using reusable Terraform modules",
-                "Deploys frontend & backend services on AWS EKS",
-                "Enables auto-scaling and self-healing via Kubernetes HPA",
-                "Implements zero-downtime CI/CD with GitHub Actions + OIDC"
-            ]
-        },
-        {
-            id: "PRJ-001-A",
-            title: "Terraform Infrastructure Foundation",
-            shortDesc: "Reusable Infrastructure Foundation. Creates custom VPC, secure networking, and OS-aware EC2 bootstrapping.",
-            infra: "VPC, Security Groups, EC2 Bootstrap",
-            icon: <Server className="w-8 h-8 text-blue-400" />,
-            description: "Designed and automated a production-style AWS infrastructure using Terraform, focusing on reproducibility, clean network design, and safe infrastructure lifecycle management. Built as a reusable foundation layer for larger cloud platforms.",
-            engineeringNotes: "Enable safe destroy-and-recreate workflows to prevent configuration drift. Custom VPC design ensures network isolation for sensitive resources.",
-            githubUrl: "https://github.com/sonivishal66666/AWS-Terraform-Infrastructure-Automation",
-            tech: ["AWS", "Terraform", "EC2", "VPC", "Nginx"],
-            stats: [
-                { label: "TYPE", value: "IaC" },
-                { label: "DRIFT", value: "Zero" },
-                { label: "MODULES", value: "Yes" }
-            ],
-            protocols: [
-                "Provisions AWS infrastructure using Infrastructure as Code",
-                "Creates a custom VPC with public subnet and route tables",
-                "Bootstraps EC2 instances automatically using OS-aware user data",
-                "Security Groups with controlled ingress/egress"
+                "Stateful WebSocket message broadcasting and client hub state synchronization",
+                "Idempotent database transactions using Supabase connection pooler",
+                "Multi-language code compilation via containerized os/exec runtimes",
+                "WebRTC peer connection setup with custom websocket signal routing"
             ]
         },
         {
             id: "PRJ-001",
-            title: "Arvis Ticketing",
-            shortDesc: "Serverless ticketing platform designed to handle concurrent bookings with minimal latency using AWS Lambda and managed databases.",
-            infra: "Deployed using serverless infrastructure with managed scaling.",
-            icon: <Globe className="w-8 h-8 text-primary" />,
-            description: "Architected a serverless ticketing platform designed to handle concurrent bookings without double-allocation. Used AWS Lambda for stateless scaling and Amazon RDS for transactional consistency. Integrated Cashfree with idempotent payment handling to ensure safe retries and secure transaction flow.",
-            engineeringNotes: "Designed assuming payment failures and retries are common. Database writes are guarded to prevent duplicate bookings.",
-            githubUrl: "https://github.com/sonivishal66666/Arvis",
-            tech: ["PHP", "AWS Lambda", "MySQL", "Cashfree"],
+            title: "ChronoVault",
+            shortDesc: "Distributed encrypted file vault prototype implementing AES-256 GCM encryption, 1KB sharding, and Merkle-tree validation.",
+            infra: "Go CLI simulation + HTTP Server API supporting JSON package bundles.",
+            icon: <Lock className="w-8 h-8 text-green-400" />,
+            description: "Designed the core encryption and storage layer: AES-256-GCM encryption, deterministic file sharding into 1KB chunks stored under their SHA-256 content-addressed hashes, and Merkle-tree integrity verification for chunk validation.",
+            metricsDisclaimer: "Secure retrieval blocked dynamically if any chunk hash fails Merkle root comparison.",
+            engineeringNotes: "Structured two execution modes: local CLI pipeline and a Web experience. Developed robust file reconstruction logic to assemble shredded chunks using a custom text manifest containing order and filenames.",
+            githubUrl: "https://github.com/sonivishal66666/ChronoVault",
+            tech: ["Go", "React", "FastAPI", "AES-256-GCM", "IPFS", "SHA-256", "Web API"],
             stats: [
-                { label: "ARCHITECTURE", value: "Serverless" },
-                { label: "PAYMENTS", value: "Secure" },
-                { label: "DB", value: "RDS" }
+                { label: "ENCRYPTION", value: "AES-256 GCM" },
+                { label: "INTEGRITY", value: "Merkle Root" },
+                { label: "SHARDING", value: "1KB Chunks" }
             ],
             protocols: [
-                "Idempotent payment processing",
-                "Transactional seat allocation",
-                "Stateless backend with managed scaling"
+                "Content-addressed chunk storage in shredded_store directory",
+                "Merkle Tree construction and validation of chunk hashes",
+                "Decoupled upload/retrieve web API with custom HTTP headers"
             ]
         },
         {
             id: "PRJ-002",
-            title: "Cafe Management",
-            shortDesc: "Cloud-based ordering system focused on reliable payment workflows and failure handling during checkout using Stripe APIs.",
-            infra: "Provisioned cloud resources via Infrastructure as Code.",
-            icon: <Database className="w-8 h-8 text-secondary" />,
-            description: "Developed a cloud-native ordering system with a focus on reliable payment workflows. Implemented REST APIs using AWS Lambda and API Gateway for high availability. Used DynamoDB for low-latency state management and integrated Stripe for secure, compliant payment processing.",
-            engineeringNotes: "Optimized for high availability during peak ordering times. Implemented circuit breakers for external payment API calls.",
-            githubUrl: "https://github.com/sonivishal66666/Cafe-Management",
-            tech: ["React", "Node.js", "DynamoDB", "Stripe"],
+            title: "AnswerHub",
+            shortDesc: "An intelligent community Q&A and FAQ platform featuring gamification, voice search, and in-browser extractive AI summaries.",
+            infra: "React 19 + Vite 8 SPA deployed on Vercel with Supabase PostgreSQL backend.",
+            icon: <Cpu className="w-8 h-8 text-purple-400" />,
+            description: "A moderated Q&A and FAQ platform featuring role-based access control, a reputation/badge gamification engine, client-side AI summaries, Web Speech API voice search/TTS accessibility, and real-time leaderboards.",
+            metricsDisclaimer: "AI summarizer generates key insights in under 5ms completely on the client side to minimize server costs.",
+            engineeringNotes: "Configured database triggers on auth.users for automatic profile generation. Built atomic upvoting/downvoting SQL functions and indexes. Implemented Fuse.js fuzzy matching for type-ahead and duplicate question detection.",
+            githubUrl: "https://github.com/sonivishal66666/Answerhub",
+            tech: ["React 19", "Vite 8", "Supabase", "Tailwind CSS", "Framer Motion", "Fuse.js", "Web Speech API"],
             stats: [
-                { label: "LATENCY", value: "Low" },
-                { label: "API", value: "REST" },
-                { label: "SCALE", value: "Auto" }
+                { label: "SEARCH", value: "Voice / Fuzzy" },
+                { label: "AI", value: "Client Summaries" },
+                { label: "SECURITY", value: "Row Level Policies" }
             ],
             protocols: [
-                "Secure payment callbacks",
-                "Low-latency state management",
-                "RESTful API design"
+                "Extractive frequency-based NLP summary algorithm",
+                "Supabase PostgreSQL database triggers and composite primary keys",
+                "Web Speech Recognition API and SpeechSynthesis read-aloud hooks"
             ]
         },
         {
             id: "PRJ-003",
-            title: "Face-Body Suite",
-            shortDesc: "Computer vision pipeline for real-time facial recognition and posture analysis, optimized for low-latency inference.",
-            infra: "Designed with monitoring and failure recovery in mind.",
-            icon: <Shield className="w-8 h-8 text-green-400" />,
-            description: "Built a high-performance computer vision pipeline for real-time facial recognition and posture analysis. Optimized OpenCV and MediaPipe inference models for low-latency execution. Implemented efficient frame processing to ensure real-time feedback.",
-            engineeringNotes: "Focused on minimizing inference latency to ensure smooth real-time user experience. Implemented frame dropping strategies for slower hardware.",
-            githubUrl: "https://github.com/sonivishal66666/Face-Body-Detection-Suite",
-            tech: ["Python", "OpenCV", "MediaPipe", "ML"],
+            title: "Arvis X",
+            shortDesc: "AI-powered travel & booking platform supporting flights, hotels, and events with real-time seat reservation under high concurrency.",
+            infra: "Stateless backend scaling via AWS Lambda & EKS, automated with Terraform IaC.",
+            icon: <Globe className="w-8 h-8 text-primary" />,
+            description: "Architected a travel booking platform supporting role-based dashboards for users, vendors, and administrators. Engineered real-time seat reservations using Redis locking and WebSockets. Integrated Cashfree payments with automatic refund workflows and an LLM travel concierge.",
+            metricsDisclaimer: "Redis-based mutex locks prevent double-booking of seats during high-traffic campaigns.",
+            engineeringNotes: "Focused on concurrency and transactional consistency. Handled payment timeouts and webhook failures gracefully via idempotent database checks. Deployed via Terraform-managed IaC.",
+            githubUrl: "https://github.com/sonivishal66666/Arvis",
+            tech: ["Next.js", "Cashfree", "AWS Lambda", "Kubernetes", "Redis", "WebSockets", "Terraform", "LLM APIs"],
             stats: [
-                { label: "ACCURACY", value: "High" },
-                { label: "SPEED", value: "Real-time" },
-                { label: "TYPE", value: "CV" }
+                { label: "CONCURRENCY", value: "Redis Mutex" },
+                { label: "ROUTING", value: "WebSocket Sync" },
+                { label: "CLOUD", value: "AWS / EKS" }
             ],
             protocols: [
-                "Real-time inference optimization",
-                "Efficient frame processing",
-                "Privacy-first data handling"
+                "Redis-based lock managers for high-concurrency seat blocking",
+                "Idempotent payment capture and automatic refund logic",
+                "Context-aware travel itineraries using LLM embeddings"
+            ]
+        },
+        {
+            id: "PRJ-004",
+            title: "DineOps",
+            shortDesc: "Restaurant management SaaS command center featuring 7 role-based portals, curating order workflows and offline JSON fallback.",
+            infra: "Next.js + NestJS backend deployed on Vercel and Supabase PostgreSQL.",
+            icon: <Server className="w-8 h-8 text-blue-400" />,
+            description: "Developed a production-grade restaurant platform serving Customers, Cashiers (POS), Chefs (KDS), Delivery staff, Admins, and Super Admins. Features end-to-end order workflows, AI concierge, real-time analytics with sentiment analysis, and a zero-compromise offline database fallback.",
+            metricsDisclaimer: "Offline mode preserves 100% feature parity using a local storage JSON file structure.",
+            engineeringNotes: "Designed dual-mode persistence that monitors database connections and dynamically routes queries. Implemented JWT auth with 7-tier role hierarchy and route guards.",
+            githubUrl: "https://github.com/sonivishal66666/DineOps",
+            tech: ["Next.js", "NestJS", "Prisma", "Supabase", "PostgreSQL", "Framer Motion", "Cashfree", "TypeScript"],
+            stats: [
+                { label: "PORTALS", value: "7 Role-Based" },
+                { label: "DATABASE", value: "Dual-Mode / Hybrid" },
+                { label: "SECURITY", value: "JWT RBAC" }
+            ],
+            protocols: [
+                "Connection monitoring and automatic JSON database fallback triggers",
+                "Real-time kitchen display system updates via server-sent events",
+                "Enterprise role-based access control and router guarding"
+            ]
+        },
+        {
+            id: "PRJ-005",
+            title: "Failure-Resilient Infra Platform",
+            shortDesc: "A self-healing Kubernetes platform engineered to tolerate failure, scale under load, and deploy with zero downtime.",
+            infra: "Auto-Scaling AWS EKS Cluster + GitHub Actions CI/CD.",
+            icon: <Layers className="w-8 h-8 text-yellow-600" />,
+            description: "Built a highly available, self-healing cloud platform designed to recover automatically from pod crashes, node failures, and traffic spikes. Implemented zero-downtime rolling updates and OIDC keyless authentication.",
+            metricsDisclaimer: "Metrics derived from HPA behavior under synthetic load testing.",
+            engineeringNotes: "Focused on recovery over happy-path. Tested failures extensively by simulating node termination and pod deletion to verify scheduling reliability. Implemented Prometheus/Grafana alerts.",
+            githubUrl: "https://github.com/sonivishal66666/Production-Grade-Cloud-Platform",
+            tech: ["AWS EKS", "Terraform", "Kubernetes", "GitHub Actions", "Prometheus", "Grafana", "Docker", "Ansible"],
+            stats: [
+                { label: "SCALING", value: "HPA / Auto" },
+                { label: "STRATEGY", value: "Rolling Update" },
+                { label: "RESILIENCE", value: "Self-Healing" }
+            ],
+            validationSteps: [
+                "Pod deletion -> Verify auto restart",
+                "Node termination -> Verify pod scheduling on healthy nodes",
+                "Load spikes -> Verify HPA triggers scaling"
+            ],
+            protocols: [
+                "Infrastructure provisioning using reusable Terraform modules",
+                "Secure zero-downtime deployments using Kubernetes HPA",
+                "Keyless OIDC integrations for GitHub Actions deploy pipelines"
             ]
         }
     ];

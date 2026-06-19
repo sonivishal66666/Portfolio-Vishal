@@ -100,16 +100,49 @@ const About = () => {
                             Problem_Solving_Logs
                         </h3>
 
-                        <div className="bg-gradient-to-r from-primary/5 to-transparent border-l-2 border-primary p-4 rounded-r-lg">
-                            <div className="flex items-start gap-4">
-                                <div className="p-2 bg-primary/10 rounded-lg text-primary">
-                                    <Zap className="w-5 h-5" />
+                        <div className="space-y-4">
+                            {/* CodeVita */}
+                            <div className="bg-gradient-to-r from-primary/5 to-transparent border-l-2 border-primary p-4 rounded-r-lg">
+                                <div className="flex items-start gap-4">
+                                    <div className="p-2 bg-primary/10 rounded-lg text-primary">
+                                        <Zap className="w-5 h-5" />
+                                    </div>
+                                    <div>
+                                        <h4 className="text-base font-bold text-white mb-1">TCS CodeVita Season 13</h4>
+                                        <p className="text-sm text-gray-400 leading-relaxed font-mono">
+                                            Secured <strong className="text-white">AIR 217</strong> (100,000+ participants), ranked <strong className="text-primary">3rd</strong> at VIT Bhopal university-wide, with a final global rank of <strong className="text-white">4,771</strong>.
+                                        </p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h4 className="text-base font-bold text-white mb-1">Algorithmic Efficiency</h4>
-                                    <p className="text-sm text-gray-400 leading-relaxed">
-                                        Demonstrated advanced problem-solving skills by securing <strong className="text-white">AIR 207</strong> in CodeVita Season 13 (Round 1) and <strong className="text-white">Rank 3</strong> at VIT Bhopal University.
-                                    </p>
+                            </div>
+
+                            {/* Hackathon */}
+                            <div className="bg-gradient-to-r from-secondary/5 to-transparent border-l-2 border-secondary p-4 rounded-r-lg">
+                                <div className="flex items-start gap-4">
+                                    <div className="p-2 bg-secondary/10 rounded-lg text-secondary">
+                                        <Award className="w-5 h-5" />
+                                    </div>
+                                    <div>
+                                        <h4 className="text-base font-bold text-white mb-1">Smart Delhi Hackathon</h4>
+                                        <p className="text-sm text-gray-400 leading-relaxed font-mono">
+                                            Selected as a <strong className="text-white">Finalist</strong> from 15,000+ participants for the city-scale solution development track.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Graphs Camp */}
+                            <div className="bg-gradient-to-r from-white/5 to-transparent border-l-2 border-white/20 p-4 rounded-r-lg">
+                                <div className="flex items-start gap-4">
+                                    <div className="p-2 bg-white/5 rounded-lg text-gray-400">
+                                        <Terminal className="w-5 h-5" />
+                                    </div>
+                                    <div>
+                                        <h4 className="text-base font-bold text-white mb-1">Codeforces Graphs Camp</h4>
+                                        <p className="text-sm text-gray-400 leading-relaxed font-mono">
+                                            Selected as a mentee (top <strong className="text-white">0.1%</strong> of 80,000+ applicants). Mentored by a Codeforces Master on hard graph algorithms (shortest paths, traversals, connectivity).
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -128,10 +161,15 @@ const About = () => {
                                 <div className="flex justify-between items-start">
                                     <div>
                                         <h4 className="text-base font-bold text-white">Vellore Institute of Technology Bhopal</h4>
-                                        <p className="text-sm text-gray-400 font-mono">B.Tech CSE (Cloud Computing & Automation)</p>
+                                        <p className="text-sm text-gray-400 font-mono">B.Tech in Computer Science and Engineering</p>
                                     </div>
                                     <div className="text-right">
-                                        <div className="text-xs text-primary font-mono">2023 - 2027</div>
+                                        <div className="text-xs text-primary font-mono">2023 - Present</div>
+                                    </div>
+                                </div>
+                                <div className="flex gap-4 mt-1">
+                                    <div className="px-3 py-1 bg-white/5 rounded border border-white/10 text-xs font-mono text-gray-300">
+                                        CGPA: <span className="text-white font-bold">9.01/10</span>
                                     </div>
                                 </div>
                             </div>

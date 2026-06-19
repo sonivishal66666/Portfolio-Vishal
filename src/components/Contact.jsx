@@ -233,9 +233,10 @@ const Contact = () => {
                     <ContactCard
                         icon={Phone}
                         label="Secure Line"
-                        value="Shared on request"
+                        value="+91 63751 88332"
+                        href="tel:+916375188332"
                         color="green-500"
-                        className="opacity-60 hover:opacity-100"
+                        className="opacity-80 hover:opacity-100"
                     />
 
                     {/* Availability Card */}

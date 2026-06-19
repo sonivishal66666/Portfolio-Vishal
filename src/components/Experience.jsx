@@ -6,6 +6,17 @@ import HackerText from './HackerText';
 const Experience = () => {
     const experiences = [
         {
+            id: "EXP-004",
+            role: "Software Engineering Intern",
+            company: "Indian Institute of Technology Ropar — VLED Lab",
+            location: "Remote",
+            period: "May 2026 - Present",
+            description: "Contributing to open-source educational infrastructure tools under IIT Ropar faculty mentorship.",
+            bullet: "Involved across design, implementation, review, and deployment of infrastructure tools.",
+            tags: ["Open Source", "Infrastructure", "Systems Design", "Collaboration"],
+            icon: Code
+        },
+        {
             id: "EXP-003",
             role: "Kubernetes Cluster Orchestration",
             company: "Infrastructure Engineering",
@@ -36,7 +47,7 @@ const Experience = () => {
             description: "Developed Python scripts for automation and data processing, reinforcing scripting practices that translate directly into CI/CD workflows and infrastructure automation.",
             bullet: "Built reusable automation scripts to streamline data processing tasks, reducing manual execution time by 40%.",
             tags: ["Python", "Task Automation", "Scripting", "CLI Tooling"],
-            icon: Code
+            icon: Terminal
         }
     ];
 
