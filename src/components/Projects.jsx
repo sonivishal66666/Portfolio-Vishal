@@ -284,7 +284,7 @@ const SidePanel = ({ project, onClose, isMobile }) => {
                             href={project.githubUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex-1 py-4 bg-white/5 border border-white/10 text-white font-mono text-sm tracking-widest hover:bg-primary hover:text-black hover:border-primary transition-all duration-300 flex items-center justify-center gap-2 rounded group"
+                            className={`${project.liveUrl ? 'flex-1' : 'w-full'} py-4 bg-white/10 border border-white/20 text-white font-mono text-sm tracking-widest hover:bg-primary hover:text-black hover:border-primary transition-all duration-300 flex items-center justify-center gap-2 rounded group`}
                         >
                             <Github className="w-4 h-4 group-hover:scale-110 transition-transform" />
                             <span>ACCESS SOURCE_CODE</span>
