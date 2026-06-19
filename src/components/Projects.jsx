@@ -78,7 +78,22 @@ const ProjectCard = ({ project, onClick, index }) => {
                     </div>
                     <div className="flex flex-col items-end gap-2">
                         <div className="flex items-center gap-2">
-                            <span className="text-[10px] font-mono text-primary animate-pulse">● LIVE</span>
+                            {project.liveUrl ? (
+                                <a
+                                    href={project.liveUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={(e) => e.stopPropagation()}
+                                    className="text-[10px] font-mono text-primary hover:text-white transition-colors flex items-center gap-1 bg-primary/10 border border-primary/20 px-2 py-0.5 rounded"
+                                    title="View Live Site"
+                                >
+                                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse inline-block" />
+                                    <span>LIVE</span>
+                                    <ExternalLink className="w-2.5 h-2.5" />
+                                </a>
+                            ) : (
+                                <span className="text-[10px] font-mono text-gray-500 bg-white/5 border border-white/10 px-2 py-0.5 rounded">● OFFLINE</span>
+                            )}
                             <a
                                 href={project.githubUrl}
                                 target="_blank"
@@ -264,16 +279,27 @@ const SidePanel = ({ project, onClose, isMobile }) => {
                     </div>
 
                     {/* Inline Footer Action */}
-                    <div className="pt-6 border-t border-white/10">
+                    <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row gap-4">
                         <a
                             href={project.githubUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-full py-4 bg-white/5 border border-white/10 text-white font-mono text-sm tracking-widest hover:bg-primary hover:text-black hover:border-primary transition-all duration-300 flex items-center justify-center gap-2 rounded group"
+                            className="flex-1 py-4 bg-white/5 border border-white/10 text-white font-mono text-sm tracking-widest hover:bg-primary hover:text-black hover:border-primary transition-all duration-300 flex items-center justify-center gap-2 rounded group"
                         >
                             <Github className="w-4 h-4 group-hover:scale-110 transition-transform" />
                             <span>ACCESS SOURCE_CODE</span>
                         </a>
+                        {project.liveUrl && (
+                            <a
+                                href={project.liveUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex-1 py-4 bg-primary text-black font-mono text-sm tracking-widest hover:bg-white hover:text-black hover:border-white transition-all duration-300 flex items-center justify-center gap-2 rounded group"
+                            >
+                                <ExternalLink className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                                <span>ACCESS LIVE_SYSTEM</span>
+                            </a>
+                        )}
                     </div>
                 </div>
             </motion.div>
@@ -296,6 +322,7 @@ const Projects = () => {
             metricsDisclaimer: "Performance optimized using decoupled containerized stateful WebSocket servers to bypass Vercel serverless limitations.",
             engineeringNotes: "Bypassed Vercel Serverless WebSocket limits by containerizing a stateful Go service on Railway. Solved Supabase connection pooler (PgBouncer) prepared-statement limitations by programmatically configuring simple protocol queries in pgx.",
             githubUrl: "https://github.com/sonivishal66666/CollabCode",
+            liveUrl: "https://collab-code-mocha.vercel.app/",
             tech: ["Next.js", "TypeScript", "Go", "WebSocket", "PostgreSQL", "WebRTC", "Docker", "Zustand", "Redis", "Supabase"],
             isFlagship: true,
             stats: [
@@ -322,10 +349,11 @@ const Projects = () => {
             shortDesc: "Distributed encrypted file vault prototype implementing AES-256 GCM encryption, 1KB sharding, and Merkle-tree validation.",
             infra: "Go CLI simulation + HTTP Server API supporting JSON package bundles.",
             icon: <Lock className="w-8 h-8 text-green-400" />,
-            description: "Designed the core encryption and storage layer: AES-256-GCM encryption, deterministic file sharding into 1KB chunks stored under their SHA-256 content-addressed hashes, and Merkle-tree integrity verification for chunk validation.",
+            description: "Designed the core encryption and storage layer: AES-256-GCM encryption, deterministic file sharding, and Merkle-tree integrity verification. Collaborated within a 6-member team, contributing to system architecture decisions, cross-component integration, and technical design across the full stack.",
             metricsDisclaimer: "Secure retrieval blocked dynamically if any chunk hash fails Merkle root comparison.",
             engineeringNotes: "Structured two execution modes: local CLI pipeline and a Web experience. Developed robust file reconstruction logic to assemble shredded chunks using a custom text manifest containing order and filenames.",
             githubUrl: "https://github.com/sonivishal66666/ChronoVault",
+            liveUrl: "https://chronovault-psi.vercel.app/",
             tech: ["Go", "React", "FastAPI", "AES-256-GCM", "IPFS", "SHA-256", "Web API"],
             stats: [
                 { label: "ENCRYPTION", value: "AES-256 GCM" },
@@ -348,6 +376,7 @@ const Projects = () => {
             metricsDisclaimer: "AI summarizer generates key insights in under 5ms completely on the client side to minimize server costs.",
             engineeringNotes: "Configured database triggers on auth.users for automatic profile generation. Built atomic upvoting/downvoting SQL functions and indexes. Implemented Fuse.js fuzzy matching for type-ahead and duplicate question detection.",
             githubUrl: "https://github.com/sonivishal66666/Answerhub",
+            liveUrl: "https://answerhub-zeta.vercel.app/",
             tech: ["React 19", "Vite 8", "Supabase", "Tailwind CSS", "Framer Motion", "Fuse.js", "Web Speech API"],
             stats: [
                 { label: "SEARCH", value: "Voice / Fuzzy" },
@@ -370,6 +399,7 @@ const Projects = () => {
             metricsDisclaimer: "Redis-based mutex locks prevent double-booking of seats during high-traffic campaigns.",
             engineeringNotes: "Focused on concurrency and transactional consistency. Handled payment timeouts and webhook failures gracefully via idempotent database checks. Deployed via Terraform-managed IaC.",
             githubUrl: "https://github.com/sonivishal66666/Arvis",
+            liveUrl: "https://arvis-frontend.vercel.app/",
             tech: ["Next.js", "Cashfree", "AWS Lambda", "Kubernetes", "Redis", "WebSockets", "Terraform", "LLM APIs"],
             stats: [
                 { label: "CONCURRENCY", value: "Redis Mutex" },
@@ -392,6 +422,7 @@ const Projects = () => {
             metricsDisclaimer: "Offline mode preserves 100% feature parity using a local storage JSON file structure.",
             engineeringNotes: "Designed dual-mode persistence that monitors database connections and dynamically routes queries. Implemented JWT auth with 7-tier role hierarchy and route guards.",
             githubUrl: "https://github.com/sonivishal66666/DineOps",
+            liveUrl: "https://dine-ops-hazel.vercel.app/",
             tech: ["Next.js", "NestJS", "Prisma", "Supabase", "PostgreSQL", "Framer Motion", "Cashfree", "TypeScript"],
             stats: [
                 { label: "PORTALS", value: "7 Role-Based" },

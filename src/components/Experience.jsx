@@ -6,7 +6,7 @@ import HackerText from './HackerText';
 const Experience = () => {
     const experiences = [
         {
-            id: "EXP-004",
+            id: "EXP-003",
             role: "Software Engineering Intern",
             company: "Indian Institute of Technology Ropar — VLED Lab",
             location: "Remote",
@@ -14,29 +14,20 @@ const Experience = () => {
             description: "Contributing to open-source educational infrastructure tools under IIT Ropar faculty mentorship.",
             bullet: "Involved across design, implementation, review, and deployment of infrastructure tools.",
             tags: ["Open Source", "Infrastructure", "Systems Design", "Collaboration"],
-            icon: Code
-        },
-        {
-            id: "EXP-003",
-            role: "Kubernetes Cluster Orchestration",
-            company: "Infrastructure Engineering",
-            location: "Self-Initiated",
-            period: "Oct 2024 - Present",
-            description: "Designed a self-healing microservices cluster with automated scaling and monitoring.",
-            bullet: "Implemented HPA (Horizontal Pod Autoscaling) and configured Prometheus/Grafana for real-time metrics.",
-            tags: ["Kubernetes", "Docker", "Helm", "Monitoring"],
-            icon: Server
+            icon: Code,
+            badge: "INTERNSHIP"
         },
         {
             id: "EXP-002",
-            role: "Cloud Infrastructure Deployment",
-            company: "AWS / Terraform Project",
-            location: "Self-Initiated",
-            period: "Aug 2024 - Sep 2024",
-            description: "Architected and deployed a highly available 3-tier web application on AWS using Terraform.",
-            bullet: "Provisioned VPCs, EC2 instances, and RDS databases with automated state management.",
-            tags: ["AWS", "Terraform", "IaC", "Networking"],
-            icon: Cloud
+            role: "Open Source Contributor",
+            company: "eSim (FOSSEE, IIT Bombay)",
+            location: "Remote",
+            period: "Feb 2026 - Present",
+            description: "Ported eSim EDA toolchain to Ubuntu 25.04 by resolving complex dependency and toolchain failures.",
+            bullet: "Resolved 13 toolchain failures across KiCad, GHDL, LLVM, Python 3.13, and package repositories.",
+            tags: ["Ubuntu 25.04", "KiCad", "GHDL", "LLVM", "Python 3.13", "Toolchains"],
+            icon: Terminal,
+            badge: "OPEN SOURCE"
         },
         {
             id: "EXP-001",
@@ -47,7 +38,8 @@ const Experience = () => {
             description: "Developed Python scripts for automation and data processing, reinforcing scripting practices that translate directly into CI/CD workflows and infrastructure automation.",
             bullet: "Built reusable automation scripts to streamline data processing tasks, reducing manual execution time by 40%.",
             tags: ["Python", "Task Automation", "Scripting", "CLI Tooling"],
-            icon: Terminal
+            icon: Code,
+            badge: "INTERNSHIP"
         }
     ];
 
@@ -153,8 +145,19 @@ const Experience = () => {
                                             <exp.icon className="w-6 h-6" />
                                         </div>
                                         <div>
-                                            <h3 className="text-xl font-bold text-white group-hover:text-primary transition-colors">
+                                            <h3 className="text-xl font-bold text-white group-hover:text-primary transition-colors flex flex-wrap items-center gap-2">
                                                 {exp.role}
+                                                {exp.badge && (
+                                                    <span className={`text-[10px] px-2 py-0.5 rounded font-mono font-bold tracking-widest ${
+                                                        exp.badge === 'INTERNSHIP'
+                                                            ? 'bg-primary/20 text-primary border border-primary/30 shadow-[0_0_10px_rgba(0,240,255,0.15)]'
+                                                            : exp.badge === 'OPEN SOURCE'
+                                                            ? 'bg-secondary/20 text-secondary border border-secondary/30 shadow-[0_0_10px_rgba(112,0,255,0.15)]'
+                                                            : 'bg-white/5 text-gray-400 border border-white/10'
+                                                    }`}>
+                                                        {exp.badge}
+                                                    </span>
+                                                )}
                                             </h3>
                                             <div className="text-lg text-gray-400 font-mono">{exp.company}</div>
                                         </div>
