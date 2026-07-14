@@ -190,7 +190,9 @@ const Contact = () => {
                             className="relative group cursor-pointer block"
                         >
                             <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-secondary rounded-xl blur opacity-30 group-hover:opacity-70 transition duration-500" />
-                            <div className="relative bg-black/80 backdrop-blur-xl border border-primary/50 rounded-xl p-8 flex flex-col md:flex-row items-center justify-between gap-6 hover:border-primary transition-colors">
+                            <div className="relative bg-black/80 backdrop-blur-xl border border-primary/50 rounded-xl p-8 flex flex-col md:flex-row items-center justify-between gap-6 hover:border-primary transition-colors overflow-hidden">
+                                {/* Holographic sheen */}
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none" />
                                 <div className="flex items-center gap-6">
                                     <div className="p-4 rounded-full bg-primary/20 text-primary">
                                         <Mail className="w-8 h-8" />
@@ -251,8 +253,10 @@ const Contact = () => {
                         <div className="relative bg-black/60 backdrop-blur-xl border border-white/10 rounded-xl p-6 h-full flex flex-col md:flex-row justify-between items-center gap-4 hover:border-white/20 transition-colors">
                             <div className="flex items-center gap-4">
                                 <div className="relative">
-                                    <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
+                                    <div className="w-3 h-3 rounded-full bg-green-500" />
                                     <div className="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-75" />
+                                    <div className="absolute -inset-1 rounded-full border border-green-500/30 animate-pulse" />
+                                    <div className="absolute -inset-2 rounded-full border border-green-500/15" style={{ animation: 'pulse-ring 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite' }} />
                                 </div>
                                 <div>
                                     <div className="text-lg font-bold text-white">OPEN TO DEVOPS / CLOUD ENGINEERING ROLES</div>

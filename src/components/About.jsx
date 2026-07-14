@@ -47,12 +47,12 @@ const About = () => {
 
                     {/* Quick Stats - Reframed */}
                     <div className="grid grid-cols-2 gap-4 max-w-xs mx-auto lg:mx-0">
-                        <div className="bg-white/5 border border-white/10 p-4 rounded-xl hover:border-primary/30 transition-colors">
+                        <div className="bg-white/5 border border-white/10 p-4 rounded-xl hover:border-primary/30 transition-all duration-300 glow-pulse cursor-default">
                             <div className="text-primary mb-2"><Code className="w-5 h-5" /></div>
                             <div className="text-xl font-bold text-white font-display">Multiple</div>
                             <div className="text-[10px] text-gray-400 font-mono uppercase">Production Deployments</div>
                         </div>
-                        <div className="bg-white/5 border border-white/10 p-4 rounded-xl hover:border-secondary/30 transition-colors">
+                        <div className="bg-white/5 border border-white/10 p-4 rounded-xl hover:border-secondary/30 transition-all duration-300 cursor-default" style={{ animation: 'glow-breathe 3s ease-in-out infinite 1.5s' }}>
                             <div className="text-secondary mb-2"><Globe className="w-5 h-5" /></div>
                             <div className="text-xl font-bold text-white font-display">Global</div>
                             <div className="text-[10px] text-gray-400 font-mono uppercase">Infrastructure</div>
@@ -77,7 +77,9 @@ const About = () => {
                         <h2 className="text-4xl md:text-5xl font-bold font-display mb-6 text-white">
                             <HackerText text="ABOUT_ME" />
                         </h2>
-                        <div className="space-y-6 border-l-2 border-white/10 pl-6">
+                        <div className="space-y-6 border-l-2 border-white/10 pl-6 relative">
+                            {/* Traveling pulse on timeline */}
+                            <div className="absolute left-[-1px] w-[2px] h-6 bg-gradient-to-b from-primary to-transparent rounded-full" style={{ animation: 'timeline-pulse 4s ease-in-out infinite' }} />
                             <p className="text-gray-300 text-lg leading-relaxed">
                                 I build resilient <span className="text-primary">AWS</span> and <span className="text-secondary">Kubernetes</span> infrastructure using Terraform and CI/CD pipelines. My focus is on production-grade deployments where reliability is non-negotiable.
                             </p>
@@ -102,7 +104,7 @@ const About = () => {
 
                         <div className="space-y-4">
                             {/* CodeVita */}
-                            <div className="bg-gradient-to-r from-primary/5 to-transparent border-l-2 border-primary p-4 rounded-r-lg">
+                            <div className="bg-gradient-to-r from-primary/5 to-transparent border-l-2 border-primary p-4 rounded-r-lg card-lift cursor-default">
                                 <div className="flex items-start gap-4">
                                     <div className="p-2 bg-primary/10 rounded-lg text-primary">
                                         <Zap className="w-5 h-5" />
@@ -117,7 +119,7 @@ const About = () => {
                             </div>
 
                             {/* Hackathon */}
-                            <div className="bg-gradient-to-r from-secondary/5 to-transparent border-l-2 border-secondary p-4 rounded-r-lg">
+                            <div className="bg-gradient-to-r from-secondary/5 to-transparent border-l-2 border-secondary p-4 rounded-r-lg card-lift cursor-default">
                                 <div className="flex items-start gap-4">
                                     <div className="p-2 bg-secondary/10 rounded-lg text-secondary">
                                         <Award className="w-5 h-5" />
@@ -132,7 +134,7 @@ const About = () => {
                             </div>
 
                             {/* Graphs Camp */}
-                            <div className="bg-gradient-to-r from-white/5 to-transparent border-l-2 border-white/20 p-4 rounded-r-lg">
+                            <div className="bg-gradient-to-r from-white/5 to-transparent border-l-2 border-white/20 p-4 rounded-r-lg card-lift cursor-default">
                                 <div className="flex items-start gap-4">
                                     <div className="p-2 bg-white/5 rounded-lg text-gray-400">
                                         <Terminal className="w-5 h-5" />
@@ -141,6 +143,21 @@ const About = () => {
                                         <h4 className="text-base font-bold text-white mb-1">Codeforces Graphs Camp</h4>
                                         <p className="text-sm text-gray-400 leading-relaxed font-mono">
                                             Selected as a mentee (top <strong className="text-white">0.1%</strong> of 80,000+ applicants). Mentored by a Codeforces Master on hard graph algorithms (shortest paths, traversals, connectivity).
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* NeoCodeathon */}
+                            <div className="bg-gradient-to-r from-purple-500/5 to-transparent border-l-2 border-purple-500 p-4 rounded-r-lg card-lift cursor-default">
+                                <div className="flex items-start gap-4">
+                                    <div className="p-2 bg-purple-500/10 rounded-lg text-purple-400">
+                                        <Terminal className="w-5 h-5" />
+                                    </div>
+                                    <div>
+                                        <h4 className="text-base font-bold text-white mb-1">NeoCodeathon</h4>
+                                        <p className="text-sm text-gray-400 leading-relaxed font-mono">
+                                            <strong className="text-white">Finalist</strong> — June 2026. Qualified for the Finals Round based on outstanding performance in the Prelims.
                                         </p>
                                     </div>
                                 </div>

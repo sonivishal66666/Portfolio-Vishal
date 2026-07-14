@@ -5,6 +5,7 @@ import About from './components/About';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Experience from './components/Experience';
+import Certifications from './components/Certifications';
 import Contact from './components/Contact';
 import Resume from './components/Resume';
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/" element={<PageTransition><Hero /><About /></PageTransition>} />
           <Route path="/projects" element={<PageTransition><Projects /></PageTransition>} />
           <Route path="/skills" element={<PageTransition><Skills /></PageTransition>} />
+          <Route path="/certifications" element={<PageTransition><Certifications /></PageTransition>} />
           <Route path="/experience" element={<PageTransition><Experience /></PageTransition>} />
           <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
           <Route path="/resume" element={<PageTransition><Resume /></PageTransition>} />

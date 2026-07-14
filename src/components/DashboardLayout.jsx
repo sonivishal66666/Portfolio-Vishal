@@ -14,7 +14,8 @@ import {
     Menu,
     X,
     ChevronRight,
-    FileText
+    FileText,
+    Award
 } from 'lucide-react';
 import CustomCursor from './CustomCursor';
 
@@ -57,6 +58,7 @@ const DashboardLayout = ({ children }) => {
         { path: '/', label: 'OVERVIEW', icon: LayoutDashboard },
         { path: '/projects', label: 'PROJECTS', icon: Layers },
         { path: '/skills', label: 'SKILLS', icon: Cpu },
+        { path: '/certifications', label: 'CERTS', icon: Award },
         { path: '/experience', label: 'LOGS', icon: Terminal },
         { path: '/contact', label: 'CONTACT', icon: Wifi },
         { path: '/resume', label: 'RESUME', icon: FileText },

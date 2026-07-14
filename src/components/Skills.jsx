@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Cpu, Code, Globe, Database, Terminal, Award, CheckCircle, Shield, Layers } from 'lucide-react';
+import { Cpu, Code, Globe, Database, Terminal, Award, CheckCircle, Shield, Layers, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import HackerText from './HackerText';
 
 const SkillModule = ({ skill, index }) => (
@@ -53,36 +54,7 @@ const SkillModule = ({ skill, index }) => (
     </motion.div>
 );
 
-const CertCard = ({ cert, index }) => (
-    <motion.div
-        initial={{ opacity: 0, x: 20 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        whileHover={{ scale: 1.02, x: 5 }}
-        transition={{ delay: index * 0.1 }}
-        className="relative group cursor-pointer"
-    >
-        <div className="relative bg-black/60 border border-white/10 rounded-lg p-4 group-hover:border-secondary/50 transition-all duration-300 flex items-center gap-4 overflow-hidden shadow-md group-hover:shadow-secondary/20">
-            {/* Holographic Sheen */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none" />
 
-            <div className="p-3 bg-secondary/10 rounded-lg border border-secondary/20 text-secondary group-hover:scale-110 transition-transform">
-                <Award className="w-5 h-5" />
-            </div>
-
-            <div className="flex-1 min-w-0">
-                <h4 className="text-white font-bold text-sm truncate group-hover:text-secondary transition-colors">{cert.title}</h4>
-                <div className="flex items-center gap-2 mt-1">
-                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/5 text-gray-400 border border-white/5 group-hover:border-white/20 transition-colors">
-                        {cert.issuer}
-                    </span>
-                    <span className="text-[10px] font-mono text-green-500 flex items-center gap-1">
-                        <CheckCircle className="w-3 h-3" /> VERIFIED
-                    </span>
-                </div>
-            </div>
-        </div>
-    </motion.div>
-);
 
 const Skills = () => {
     const [activeCategory, setActiveCategory] = useState('languages'); // Default to Languages
@@ -155,13 +127,7 @@ const Skills = () => {
         }
     };
 
-    const certifications = [
-        { title: "Frontend Developer (React)", issuer: "HackerRank" },
-        { title: "SQL (Advanced)", issuer: "HackerRank" },
-        { title: "Applied Machine Learning", issuer: "Coursera" },
-        { title: "IoT Introduction", issuer: "NPTEL" },
-        { title: "Advanced Kubernetes", issuer: "Udemy" }
-    ];
+
 
     const [isMobile, setIsMobile] = useState(false);
 
@@ -268,17 +234,23 @@ const Skills = () => {
                             </AnimatePresence>
                         </div>
 
-                        {/* Certifications */}
+                        {/* Certifications CTA */}
                         <div className="pt-8 border-t border-white/10">
-                            <h3 className="text-xl font-bold text-white flex items-center gap-3 font-display mb-6">
-                                <Shield className="w-5 h-5 text-secondary" />
-                                VERIFIED_CREDENTIALS
-                            </h3>
-                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                {certifications.map((cert, index) => (
-                                    <CertCard key={index} cert={cert} index={index} />
-                                ))}
-                            </div>
+                            <Link
+                                to="/certifications"
+                                className="group flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-[#FF9900]/5 to-transparent border border-[#FF9900]/10 hover:border-[#FF9900]/30 transition-all duration-300"
+                            >
+                                <div className="flex items-center gap-3">
+                                    <div className="p-2 rounded-lg bg-[#FF9900]/10 border border-[#FF9900]/20">
+                                        <Shield className="w-5 h-5 text-[#FF9900]" />
+                                    </div>
+                                    <div>
+                                        <h4 className="text-sm font-bold text-white group-hover:text-[#FF9900] transition-colors">View Certifications</h4>
+                                        <p className="text-[10px] font-mono text-gray-500">AWS Certified · 8 credentials verified</p>
+                                    </div>
+                                </div>
+                                <ArrowRight className="w-4 h-4 text-gray-600 group-hover:text-[#FF9900] group-hover:translate-x-1 transition-all" />
+                            </Link>
                         </div>
                     </div>
                 </div>

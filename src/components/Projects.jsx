@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Server, Database, Globe, Shield, Zap, ExternalLink, Github, Terminal, X, ChevronRight, Layers, Cloud, Lock, Cpu, Crown } from 'lucide-react';
+import HackerText from './HackerText';
 
 const ProjectCard = ({ project, onClick, index }) => {
     const ref = useRef(null);
@@ -113,9 +114,7 @@ const ProjectCard = ({ project, onClick, index }) => {
                     {/* Title & Desc */}
                     <div className="mb-auto flex-1">
                         <h3 className={`font-bold font-display text-white mb-2 transition-colors ${project.isFlagship ? 'text-4xl group-hover:text-yellow-500' : 'text-2xl group-hover:text-primary'}`}>
-                            <h3 className={`font-bold font-display text-white mb-2 transition-colors ${project.isFlagship ? 'text-4xl group-hover:text-yellow-500' : 'text-2xl group-hover:text-primary'}`}>
-                                {project.title}
-                            </h3>
+                            {project.title}
                         </h3>
                         <p className={`text-gray-400 font-mono leading-relaxed mb-3 ${project.isFlagship ? 'text-base line-clamp-none' : 'text-sm line-clamp-3'}`}>
                             {project.shortDesc}
@@ -531,9 +530,7 @@ const Projects = () => {
                         <span>SYSTEM_OVERRIDE_ENGAGED</span>
                     </div>
                     <h2 className="text-3xl md:text-7xl font-bold font-display mb-6 tracking-tight">
-                        <h2 className="text-3xl md:text-7xl font-bold font-display mb-6 tracking-tight">
-                            PROJECT_ARCHIVE
-                        </h2>
+                        <HackerText text="PROJECT_ARCHIVE" />
                     </h2>
                     <p className="text-gray-400 max-w-xl mx-auto text-lg font-mono">
                         Advanced infrastructure deployments and security protocols.

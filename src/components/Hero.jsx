@@ -208,6 +208,66 @@ const LiveTerminal = () => {
     );
 };
 
+// Animated counter hook
+const useCounter = (end, duration = 2000, startOnView = true) => {
+    const [count, setCount] = useState(0);
+    const [hasStarted, setHasStarted] = useState(false);
+    const ref = useRef(null);
+
+    useEffect(() => {
+        if (!startOnView) {
+            setHasStarted(true);
+        }
+    }, [startOnView]);
+
+    useEffect(() => {
+        if (!hasStarted) return;
+        let startTime;
+        const step = (timestamp) => {
+            if (!startTime) startTime = timestamp;
+            const progress = Math.min((timestamp - startTime) / duration, 1);
+            setCount(Math.floor(progress * end));
+            if (progress < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+    }, [hasStarted, end, duration]);
+
+    return { count, ref, setHasStarted };
+};
+
+// Typing subtitle effect
+const TypingSubtitle = ({ text, delay = 1000 }) => {
+    const [displayed, setDisplayed] = useState('');
+    const [showCursor, setShowCursor] = useState(true);
+
+    useEffect(() => {
+        let i = 0;
+        const timer = setTimeout(() => {
+            const interval = setInterval(() => {
+                if (i < text.length) {
+                    setDisplayed(text.slice(0, i + 1));
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    // Blink cursor after typing complete
+                    const blink = setInterval(() => setShowCursor(prev => !prev), 530);
+                    return () => clearInterval(blink);
+                }
+            }, 50);
+            return () => clearInterval(interval);
+        }, delay);
+        return () => clearTimeout(timer);
+    }, [text, delay]);
+
+    return (
+        <div className="text-sm md:text-base font-mono text-gray-400 mt-4 flex items-center gap-1">
+            <span className="text-primary">{'>'}</span>
+            <span>{displayed}</span>
+            <span className={`w-2 h-5 bg-primary inline-block ${showCursor ? 'opacity-100' : 'opacity-0'}`} />
+        </div>
+    );
+};
+
 const Hero = () => {
     const [booted, setBooted] = useState(false);
 
@@ -251,6 +311,8 @@ const Hero = () => {
                         <div className="absolute bottom-0 left-0 w-20 h-20 border-b-2 border-l-2 border-secondary/50 rounded-bl-3xl opacity-50" />
                     </div>
 
+                    <TypingSubtitle text="Cloud & DevOps Engineer | AWS Certified × 3" delay={800} />
+
                     <p className="text-lg md:text-xl text-gray-400 mb-8 leading-relaxed max-w-lg border-l-2 border-primary/30 pl-6">
                         I build AWS & Kubernetes systems that recover automatically under failure.
                     </p>
@@ -266,30 +328,46 @@ const Hero = () => {
 
                     {/* Proof Strip */}
                     <div className="mb-12 border-t border-white/10 pt-6">
-                        <div className="flex flex-wrap justify-center lg:justify-start gap-x-4 gap-y-2 text-xs md:text-sm font-mono text-gray-500">
-                            <div className="flex flex-wrap justify-center lg:justify-start gap-2">
-                                <span className="text-primary">AWS</span> • <span>Terraform</span> • <span>Kubernetes</span> • <span>Docker</span> • <span>CI/CD</span>
-                            </div>
-                            <div className="hidden md:inline text-gray-600">•</div>
-                            <div className="flex flex-wrap justify-center lg:justify-start gap-2 text-gray-600">
-                                <span>Production deployments</span> • <span>Serverless + Containers</span>
-                            </div>
+                        <div className="flex flex-wrap justify-center lg:justify-start gap-3 text-xs md:text-sm font-mono">
+                            {['AWS', 'Terraform', 'Kubernetes', 'Docker', 'CI/CD', 'Serverless'].map((tag, i) => (
+                                <motion.span
+                                    key={tag}
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 1.2 + i * 0.1 }}
+                                    className={`px-3 py-1 rounded-md border transition-colors ${i === 0 ? 'bg-primary/10 border-primary/30 text-primary' : 'bg-white/5 border-white/10 text-gray-400 hover:border-primary/20 hover:text-gray-300'}`}
+                                >
+                                    {tag}
+                                </motion.span>
+                            ))}
                         </div>
                     </div>
 
                     <div className="mt-12 flex gap-8 text-gray-500 font-mono text-[10px] md:text-xs">
-                        <div>
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 1.8 }}
+                        >
                             <div className="text-primary mb-1">UPTIME</div>
                             <div>99.999%</div>
-                        </div>
-                        <div>
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 2.0 }}
+                        >
                             <div className="text-primary mb-1">LATENCY</div>
                             <div>24ms</div>
-                        </div>
-                        <div>
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 2.2 }}
+                        >
                             <div className="text-primary mb-1">REGION</div>
                             <div>AP-SOUTH-1</div>
-                        </div>
+                        </motion.div>
                     </div>
                 </motion.div>
 

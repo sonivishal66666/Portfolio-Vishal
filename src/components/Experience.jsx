@@ -18,6 +18,18 @@ const Experience = () => {
             badge: "INTERNSHIP"
         },
         {
+            id: "EXP-004",
+            role: "Virtual Intern",
+            company: "ServiceNow",
+            location: "Remote",
+            period: "Jun 2026 - Jul 2026",
+            description: "Completed a virtual internship focused on the ServiceNow platform, enterprise workflow automation, and IT service management (ITSM) fundamentals.",
+            bullet: "Learned ServiceNow Administration Fundamentals, Flow Designer, Automated Test Framework (ATF), Reports, and Agentic AI concepts.",
+            tags: ["ServiceNow", "Workflow Automation", "ITSM", "ATF", "Agentic AI"],
+            icon: Cloud,
+            badge: "INTERNSHIP"
+        },
+        {
             id: "EXP-002",
             role: "Open Source Contributor",
             company: "eSim (FOSSEE, IIT Bombay)",
@@ -135,8 +147,23 @@ const Experience = () => {
                             viewport={{ once: true }}
                             className="relative pl-8 border-l border-white/10 group"
                         >
+                            {/* Traveling timeline pulse */}
+                            {index === 0 && (
+                                <div className="absolute left-[-1px] w-[2px] top-0 bottom-0 overflow-hidden pointer-events-none">
+                                    <div className="w-full h-8 bg-gradient-to-b from-primary via-primary/50 to-transparent rounded-full" style={{ animation: 'timeline-pulse 5s ease-in-out infinite' }} />
+                                </div>
+                            )}
                             {/* Timeline Dot */}
-                            <div className="absolute left-[-5px] top-0 w-2.5 h-2.5 rounded-full bg-black border border-white/30 group-hover:border-primary group-hover:bg-primary transition-colors shadow-[0_0_10px_rgba(0,0,0,0.5)]" />
+                            <div className="absolute left-[-5px] top-0">
+                                {exp.period.includes('Present') ? (
+                                    <div className="relative">
+                                        <div className="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_10px_rgba(0,255,157,0.5)]" />
+                                        <div className="absolute inset-0 w-2.5 h-2.5 rounded-full bg-green-500 animate-ping opacity-75" />
+                                    </div>
+                                ) : (
+                                    <div className="w-2.5 h-2.5 rounded-full bg-black border border-white/30 group-hover:border-primary group-hover:bg-primary transition-colors shadow-[0_0_10px_rgba(0,0,0,0.5)]" />
+                                )}
+                            </div>
 
                             <div className="bg-white/5 border border-white/10 rounded-lg p-6 hover:border-primary/30 transition-colors group-hover:bg-white/10">
                                 <div className="flex flex-wrap justify-between items-start gap-4 mb-4">
@@ -184,9 +211,16 @@ const Experience = () => {
 
                                 <div className="flex flex-wrap gap-2">
                                     {exp.tags.map((tag, i) => (
-                                        <span key={i} className="text-[10px] px-2 py-1 rounded bg-black/50 border border-white/10 text-gray-400 font-mono hover:text-white hover:border-primary/50 transition-colors">
+                                        <motion.span
+                                            key={i}
+                                            initial={{ opacity: 0, scale: 0.8 }}
+                                            whileInView={{ opacity: 1, scale: 1 }}
+                                            viewport={{ once: true }}
+                                            transition={{ delay: index * 0.1 + i * 0.05 }}
+                                            className="text-[10px] px-2 py-1 rounded bg-black/50 border border-white/10 text-gray-400 font-mono hover:text-white hover:border-primary/50 transition-colors"
+                                        >
                                             {tag}
-                                        </span>
+                                        </motion.span>
                                     ))}
                                 </div>
                             </div>
